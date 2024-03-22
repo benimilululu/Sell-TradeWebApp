@@ -1,5 +1,7 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import emptyProfilePic from '../images/pngwing.com.png';
+import { Link } from 'react-router-dom';
 
 export default function Header({ listedItems }) {
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
@@ -43,16 +45,21 @@ export default function Header({ listedItems }) {
   return (
     <>
       <div className='text-3xl p-4 text-white grid grid-cols-2'>
-        <p className='w-fit font-extrabold'>TopFind</p>
+        <p className='w-fit font-extrabold'>
+          <Link to='/'>TopFind</Link>
+        </p>
         <div className='flex justify-end'>
-          <img src={emptyProfilePic} alt='EmptyPP' className='size-10 mr-3' />
+          <Link to='/login'>
+            <img src={emptyProfilePic} alt='EmptyPP' className='size-10 mr-3' />
+          </Link>
           <MenuButton
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             genericHamburgerLine={genericHamburgerLine}
           />
+          {isOpen && <HamburgerMenu />}
         </div>
-        <div className='flex mt-2'>
+        <div className='flex mt-4'>
           <p className='text-2xl'>Search</p>
           <input
             type='text'
@@ -88,18 +95,20 @@ const FilteringItems = ({ items, searchBarValue }) => {
       item.Name.toLowerCase().includes(searchBarValue.toLowerCase())
     )
     .map((item) => (
-      <div
-        key={item.id}
-        className='border-2 p-4 rounded-2xl m-4 overflow-scroll text-center'
-      >
-        <img className='rounded-xl' src={item.ImageUrl} />
-        <p>
-          Name: {item.Company} {item.Name}
-        </p>
-        <p>Size : {item.Number}</p>
-        <p>Price : {item.Price}$</p>
-        <p>{item.UserID}</p>
-      </div>
+      <Link key={item.id} to={`/listed-item/${item.Name}`}>
+        <div
+          key={item.id}
+          className='border-2 p-4 rounded-2xl m-4 overflow-scroll text-center'
+        >
+          <img className='rounded-xl' src={item.ImageUrl} />
+          <p>
+            Name: {item.Company} {item.Name}
+          </p>
+          <p>Size : {item.Number}</p>
+          <p>Price : {item.Price}$</p>
+          <p>{item.UserID}</p>
+        </div>
+      </Link>
     ));
 };
 
@@ -131,3 +140,29 @@ const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine }) => {
     </button>
   );
 };
+
+
+const HamburgerMenu = () => {
+  return (
+    <div className='absolute mt-10 grid text-center w-11/12 bg-white mr-1 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl'>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        Login
+      </Link>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        List Item
+      </Link>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        How it Works ?
+      </Link>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        Categories
+      </Link>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        Recommended
+      </Link>
+      <Link className='border rounded-lg m-4 p-2' to='/login'>
+        About Us
+      </Link>
+    </div>
+  );
+}
