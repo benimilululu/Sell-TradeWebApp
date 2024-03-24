@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import Header from '../components/Header';
 
 export default function AllListedItems() {
   const [listedItems, setListedItems] = useState([]);
@@ -25,7 +26,7 @@ export default function AllListedItems() {
   }, []);
 
   return (
-    <div className='mt-5'>
+      <div className='mt-5'>
       <p>All listed items :</p>
       {listedItems.map((item) => (
         <div key={item.id} className='border w-fit p-4 rounded-3xl m-4'>

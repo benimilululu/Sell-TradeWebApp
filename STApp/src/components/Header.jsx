@@ -44,14 +44,14 @@ export default function Header({ listedItems }) {
 
   return (
     <>
-      <div className='text-3xl p-4 text-white grid grid-cols-2'>
+      <div className='text-3xl p-4 text-white grid grid-cols-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
         <p className='w-fit font-extrabold'>
           <Link to='/'>TopFind</Link>
         </p>
         <div className='flex justify-end'>
-          <Link to='/login'>
+          {/* <Link to='/login'>
             <img src={emptyProfilePic} alt='EmptyPP' className='size-10 mr-3' />
-          </Link>
+          </Link> */}
           <MenuButton
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -64,7 +64,7 @@ export default function Header({ listedItems }) {
           <input
             type='text'
             value={searchBarValue}
-            className='ml-2 text-black rounded-lg'
+            className='ml-4 text-black rounded-lg'
             onChange={(e) => {
               storingInputValue(e);
             }}
@@ -144,14 +144,14 @@ const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine }) => {
 
 const HamburgerMenu = () => {
   return (
-    <div className='absolute mt-10 grid text-center w-11/12 bg-white mr-1 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl'>
+    <div className='absolute mt-12 grid text-center w-11/12 mr-1 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl'>
       <Link className='border rounded-lg m-4 p-2' to='/login'>
         Login
       </Link>
-      <Link className='border rounded-lg m-4 p-2' to='/login'>
+      <Link className='border rounded-lg m-4 p-2' to='/list-item'>
         List Item
       </Link>
-      <Link className='border rounded-lg m-4 p-2' to='/login'>
+      <Link className='border rounded-lg m-4 p-2' to='/how-it-works'>
         How it Works ?
       </Link>
       <Link className='border rounded-lg m-4 p-2' to='/login'>

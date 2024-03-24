@@ -5,8 +5,8 @@ import Categories from './components/Categories';
 import Recommended from './components/Recommended';
 import AboutUs from './components/AboutUs';
 import Login from './pages/Login';
-import AllListedItems from './components/AllListedItems';
-import AddingItemTotList from './components/AddingItemTotList';
+import AllListedItems from './pages/AllListedItems';
+import AddingItemTotList from './pages/AddingItemTotList';
 import { db, auth } from './config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
