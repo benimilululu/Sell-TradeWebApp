@@ -158,9 +158,6 @@ const HamburgerMenu = () => {
         Categories
       </Link>
       <Link className='border rounded-lg m-4 p-2' to='/login'>
-        Recommended
-      </Link>
-      <Link className='border rounded-lg m-4 p-2' to='/login'>
         About Us
       </Link>
     </div>

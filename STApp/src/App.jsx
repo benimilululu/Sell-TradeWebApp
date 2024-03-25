@@ -37,7 +37,7 @@ function App() {
       <Header listedItems={listedItems} />
       <Section1 />
       <Categories />
-      <Recommended />
+      {/* <Recommended /> */}
       <AboutUs />
       {/* <AddingItemTotList /> */}
     </div>

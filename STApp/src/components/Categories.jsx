@@ -3,10 +3,8 @@ import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
 export default function Categories() {
-  const categories = ['basketball', 'casual', 'football'];
-
-  const [categories1, setCategories1] = useState([]);
-  const [categories2, setCategories2] = useState([]);
+  const [cat1, setCat1] = useState([]);
+  const [cat2, setCat2] = useState([]);
 
   const categoriesCollectionRef = collection(db, 'Catrgories');
 
@@ -18,13 +16,31 @@ export default function Categories() {
           ...doc.data(),
           id: doc.id,
         }));
-        setCategories1(filteredItems);
-        console.log(filteredItems);
-        const clothes = filteredItems[0].clothes.map((e) => e);
-        const shoes = filteredItems[0].shoes.map((e) => e);
-        setCategories1(clothes);
-        setCategories2(shoes);
-        console.log(categories1);
+        const shoesCategories = filteredItems[0].cat.shoes;
+        const arr = [];
+        const insideCat = Object.entries(shoesCategories).map(
+          ([key, value], index) => {
+            const newObj = {
+              cat: key,
+              img: value.img,
+            };
+            return arr.push(newObj);
+          }
+        );
+        setCat1(arr);
+
+        const clothesCategories = filteredItems[0].cat.clothes;
+        const arr2 = [];
+        const insideClothesCat = Object.entries(clothesCategories).map(
+          ([key, value], index) => {
+            const newObj = {
+              cat: key,
+              img: value.img,
+            };
+            return arr2.push(newObj);
+          }
+        );
+        setCat2(arr2);
       } catch (err) {
         console.error(err);
       }
@@ -33,31 +49,34 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className='text-black text-center'>
+    <section className='text-black text-center border-4 py-5 rounded-md'>
       <p className='text-3xl font-bold text-white text-center'>Categories</p>
-      <div className=''>
-        <p className='text-2xl font-bold text-white mt-10'>Shoes</p>
-        <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
-          <CategoriesHandler cat={categories2} />
-        </div>
+      <p className='mt-3 text-2xl text-white font-bold text-start ml-4'>
+        Shoes
+      </p>
+      <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
+        <CategoriesHandler2 cat={cat1} />
       </div>
       <div>
-        <p className='text-2xl font-bold text-white mt-10'>Clothes</p>
+        <p className='mt-10 text-2xl text-white font-bold text-start ml-4'>
+          Clothes
+        </p>
         <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
-          <CategoriesHandler cat={categories1} />
+          <CategoriesHandler2 cat={cat2} />
         </div>
       </div>
     </section>
   );
 }
 
-const CategoriesHandler = ({ cat }) => {
-  return cat.map((e) => (
+const CategoriesHandler2 = ({ cat }) => {
+  return cat.map((obj, index) => (
     <div
-      className='relative border rounded-2xl h-48  align-text-bottom'
-      key={e}
+      className='border rounded-2xl h-48  align-text-bottom mb-5'
+      key={index}
     >
-      <p className='absolute inset-x-0 bottom-0'> {e}</p>
+      <img className='rounded-2xl h-full w-full object-cover' src={obj.img} />
+      <p className='text-xl'>{obj.cat}</p>
     </div>
   ));
 };
