@@ -2,9 +2,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import emptyProfilePic from '../images/pngwing.com.png';
 import { Link } from 'react-router-dom';
+import { auth } from '../config/firebase';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Header({ listedItems }) {
-  const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
+  const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
   const [isOpen, setIsOpen] = useState(false);
 
   const [searchBarValue, setSearchBarValue] = useState('');
@@ -42,8 +51,11 @@ export default function Header({ listedItems }) {
     }
   };
 
+
+
   return (
     <>
+      <Toaster />
       <div className='text-3xl p-4 text-white grid grid-cols-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
         <p className='w-fit font-extrabold'>
           <Link to='/'>TopFind</Link>
@@ -57,14 +69,21 @@ export default function Header({ listedItems }) {
             setIsOpen={setIsOpen}
             genericHamburgerLine={genericHamburgerLine}
           />
-          {isOpen && <HamburgerMenu />}
+
+            {isOpen && (
+              <HamburgerMenu
+                e={auth?.currentUser?.email}
+                isOpen={setIsOpen}
+                isOpenDiv={isOpen}
+              />
+            )}
         </div>
         <div className='flex mt-4'>
           <p className='text-2xl'>Search</p>
           <input
             type='text'
             value={searchBarValue}
-            className='ml-4 text-black rounded-lg'
+            className='ml-4 text-black rounded-lg w-fit'
             onChange={(e) => {
               storingInputValue(e);
             }}
@@ -142,12 +161,31 @@ const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine }) => {
 };
 
 
-const HamburgerMenu = () => {
+const HamburgerMenu = ({e, isOpen, isOpenDiv}) => {
+  const nav = useNavigate();
+
+   const logOut = async () => {
+     try {
+       await signOut(auth);
+       toast.success('Successfully Logged Out!');
+     } catch (err) {
+       console.error(err);
+     }
+   };
+
   return (
-    <div className='absolute mt-12 grid text-center w-11/12 mr-1 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl'>
-      <Link className='border rounded-lg m-4 p-2' to='/login'>
-        Login
-      </Link>
+    <div
+      className={`animate-slide-down absolute mt-12 grid text-center w-11/12 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl `}
+    >
+      {e ? (
+        <Link className='border rounded-lg m-4 p-2' to='/profile'>
+          My Profile
+        </Link>
+      ) : (
+        <Link className='border rounded-lg m-4 p-2' to='/login'>
+          Login
+        </Link>
+      )}
       <Link className='border rounded-lg m-4 p-2' to='/list-item'>
         List Item
       </Link>
@@ -160,6 +198,17 @@ const HamburgerMenu = () => {
       <Link className='border rounded-lg m-4 p-2' to='/login'>
         About Us
       </Link>
+      {e && (
+        <button
+          className='border rounded-lg m-4 p-2'
+          onClick={() => {
+            isOpen(false);
+            logOut();
+          }}
+        >
+          Log Out
+        </button>
+      )}
     </div>
   );
 }

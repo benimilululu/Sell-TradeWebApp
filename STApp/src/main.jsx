@@ -9,6 +9,8 @@ import Item from './pages/Item.jsx';
 import Header from './components/Header.jsx';
 import AddingItemTotList from './pages/AddingItemTotList.jsx';
 import HowItWorks from './pages/HowItWorks.jsx';
+import CategoryDynamic from './pages/CategoryDynamic.jsx';
+import Profile from './pages/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,10 +34,18 @@ const router = createBrowserRouter([
     path: '/how-it-works',
     element: <HowItWorks />,
   },
+  {
+    path: '/categories/:cat',
+    element: <CategoryDynamic />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );

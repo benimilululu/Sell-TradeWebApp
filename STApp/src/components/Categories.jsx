@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 export default function Categories() {
   const [cat1, setCat1] = useState([]);
@@ -16,6 +17,7 @@ export default function Categories() {
           ...doc.data(),
           id: doc.id,
         }));
+
         const shoesCategories = filteredItems[0].cat.shoes;
         const arr = [];
         const insideCat = Object.entries(shoesCategories).map(
@@ -49,9 +51,9 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className='text-black text-center border-4 py-5 rounded-md'>
+    <section className='text-black text-center border-y-4 pt-1 pb-5'>
       <p className='text-3xl font-bold text-white text-center'>Categories</p>
-      <p className='mt-3 text-2xl text-white font-bold text-start ml-4'>
+      <p className='mt-2 text-2xl text-white font-bold text-start ml-4'>
         Shoes
       </p>
       <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
@@ -71,12 +73,14 @@ export default function Categories() {
 
 const CategoriesHandler2 = ({ cat }) => {
   return cat.map((obj, index) => (
-    <div
-      className='border rounded-2xl h-48  align-text-bottom mb-5'
-      key={index}
-    >
-      <img className='rounded-2xl h-full w-full object-cover' src={obj.img} />
-      <p className='text-xl'>{obj.cat}</p>
-    </div>
+    <Link to={`/categories/${obj.cat}`}>
+      <div
+        className='border-4 rounded-2xl h-48  align-text-bottom mb-5'
+        key={index}
+      >
+        <img className='rounded-xl h-full w-full object-cover' src={obj.img} />
+        <p className='text-xl mt-1'>{obj.cat}</p>
+      </div>
+    </Link>
   ));
 };

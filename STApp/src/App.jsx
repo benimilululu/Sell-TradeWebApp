@@ -33,7 +33,7 @@ function App() {
   }, []);
 
   return (
-    <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
+    <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-fit'>
       <Header listedItems={listedItems} />
       <Section1 />
       <Categories />

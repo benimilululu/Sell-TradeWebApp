@@ -31,7 +31,7 @@ export default function Item() {
     }, []);
 
   return (
-    <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-center h-screen'>
+    <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-center h-screen overflow-scroll'>
         <Header />
             <FilteringItems items={listedItems} name={params.itemId} />
     </div>
@@ -46,8 +46,8 @@ const FilteringItems = ({ items, name }) => {
     .map((item) => (
         <div
           key={item.id}
-          className='border p-4 rounded-2xl
-           mx-5 text-center text-xl text-white'
+          className='border-4 p-4 rounded-2xl
+           m-5 text-center text-xl text-white'
         >
           <img className='rounded-xl' src={item.ImageUrl} />
           <p className='mt-5'>
