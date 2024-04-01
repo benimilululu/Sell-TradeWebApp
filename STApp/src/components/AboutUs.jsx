@@ -24,7 +24,7 @@ export default function AboutUs() {
   const commitment = `Our commitment to creating a safe, secure, and enjoyable environment for buying and selling items sets us apart. Whether you're a seasoned seller or a first-time buyer, our website offers a reliable platform where you can transact with confidence, knowing that we've got your back every step of the way.`;
 
   const AboutMeText = () => { 
-    return <p
+    return <div
       className='text-xl mt-10  font-serif mx-5'
       style={{ whiteSpace: 'pre-line' }}
     >
@@ -38,7 +38,7 @@ export default function AboutUs() {
       <p className='font-bold'>Community and Reviews:</p>
       <p> {communityAndReviews}</p>
       <p className='font-bold'> {commitment}</p>
-    </p>;
+    </div>;
   }
 
   return (

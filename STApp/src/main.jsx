@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
@@ -11,6 +11,9 @@ import AddingItemTotList from './pages/AddingItemTotList.jsx';
 import HowItWorks from './pages/HowItWorks.jsx';
 import CategoryDynamic from './pages/CategoryDynamic.jsx';
 import Profile from './pages/Profile.jsx';
+import Chat from './pages/Chat.jsx';
+import { AuthContext, AuthContextProvider } from './context/AuthContext.jsx';
+import { ChatContextProvider } from './context/ChatContext.jsx';
 
 const router = createBrowserRouter([
   {
@@ -42,10 +45,18 @@ const router = createBrowserRouter([
     path: '/profile',
     element: <Profile />,
   },
+  {
+    path: '/chat',
+    element: <Chat />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-  </React.StrictMode>
+  <AuthContextProvider>
+    <ChatContextProvider>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </ChatContextProvider>
+  </AuthContextProvider>
 );

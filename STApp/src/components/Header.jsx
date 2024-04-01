@@ -11,6 +11,8 @@ import {
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+import { FaRocketchat } from 'react-icons/fa';
+
 
 export default function Header({ listedItems }) {
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
@@ -70,13 +72,13 @@ export default function Header({ listedItems }) {
             genericHamburgerLine={genericHamburgerLine}
           />
 
-            {isOpen && (
-              <HamburgerMenu
-                e={auth?.currentUser?.email}
-                isOpen={setIsOpen}
-                isOpenDiv={isOpen}
-              />
-            )}
+          {isOpen && (
+            <HamburgerMenu
+              e={auth?.currentUser?.email}
+              isOpen={setIsOpen}
+              isOpenDiv={isOpen}
+            />
+          )}
         </div>
         <div className='flex mt-4'>
           <p className='text-2xl'>Search</p>
@@ -101,6 +103,12 @@ export default function Header({ listedItems }) {
             />
           </div>
         )}
+        <div className='fixed bottom-2 right-2 size-5 border-2 h-28 w-28 object-cover backdrop-blur-xl rounded-full'>
+          <Link to='/chat'>
+            <FaRocketchat className='h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
+          <p className='m-auto text-center text-xl'>Chat</p>
+          </Link>
+        </div>
       </div>
     </>
   );
@@ -168,6 +176,7 @@ const HamburgerMenu = ({e, isOpen, isOpenDiv}) => {
      try {
        await signOut(auth);
        toast.success('Successfully Logged Out!');
+       nav('/');
      } catch (err) {
        console.error(err);
      }

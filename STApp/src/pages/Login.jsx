@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
-import { auth } from '../config/firebase';
+import React, { useContext, useState } from 'react';
+import { auth, db } from '../config/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
 import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 import toast, { Toaster } from 'react-hot-toast';
+import { setDoc, doc } from 'firebase/firestore';
 
 export default function Login() {
   const [loginPage, setLoginPage] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // console.log(auth?.currentUser?.email)
+  const { currentUser } = useContext(AuthContext);
+
   const nav = useNavigate();
+
+  // console.log(auth?.currentUser?.email)
 
   const register = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
       setEmail('');
       setPassword('');
       toast.success('Successfully created account!');
-      setTimeout(() => {
-        nav('/');
-      }, 1200);
+      // setTimeout(() => {
+      // }, 1200);
+      await setDoc(doc(db, 'users', res.user.uid), {
+        email,
+        uid: res.user.uid,
+      });
+      await setDoc(doc(db, 'chatUsers', res.user.uid), {});
+      nav('/');
     } catch (err) {
       toast.error('Cannot create acc...');
       console.error(err);
@@ -138,30 +148,41 @@ export default function Login() {
     );
   };
 
+  const ProtectedRoute = ({ children }) => {
+    if (currentUser) {
+      toast.error('Cannot create acc...');
+      return <Navigate to='/' />;
+    } 
+
+    return children
+  };
+
   return (
-    <div className='relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
-      <Toaster />
-      <Header />
-      <div className='w-full  grid grid-cols-2 text-center  gap-2 text-xl items-center'>
-        <p
-          className={`p-1 duration-150 mx-3 ${
-            loginPage ? 'border-4 rounded-full' : ''
-          }`}
-          onClick={() => setLoginPage(true)}
-        >
-          Login
-        </p>
-        <p
-          className={`p-1 duration-150 mx-3 ${
-            !loginPage ? 'border-4 rounded-full' : ''
-          }`}
-          onClick={() => setLoginPage(false)}
-        >
-          Register
-        </p>
+    // <ProtectedRoute>
+      <div className='relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
+        <Toaster />
+        <Header />
+        <div className='w-full  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold'>
+          <p
+            className={`p-1 duration-300 mx-3 ${
+              loginPage ? 'bg-sky-200 rounded-full' : ''
+            }`}
+            onClick={() => setLoginPage(true)}
+          >
+            Login
+          </p>
+          <p
+            className={`p-1 duration-300 mx-3 ${
+              !loginPage ? 'bg-sky-200 rounded-full' : ''
+            }`}
+            onClick={() => setLoginPage(false)}
+          >
+            Register
+          </p>
+        </div>
+        {loginPage && showLogInPage()}
+        {!loginPage && showRegisterPage()}
       </div>
-      {loginPage && showLogInPage()}
-      {!loginPage && showRegisterPage()}
-    </div>
+    // </ProtectedRoute>
   );
 }

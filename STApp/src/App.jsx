@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Header from './components/Header';
 import Section1 from './components/Section1';
 import Categories from './components/Categories';
@@ -9,11 +9,16 @@ import AllListedItems from './pages/AllListedItems';
 import AddingItemTotList from './pages/AddingItemTotList';
 import { db, auth } from './config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import { AuthContext } from './context/AuthContext';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [listedItems, setListedItems] = useState([]);
 
   const listedItemsCollectionRef = collection(db, 'ListedItems');
+
+  const {currentUser} = useContext(AuthContext)
+  console.log(currentUser)
 
   useEffect(() => {
     const getListedItems = async () => {
@@ -34,6 +39,7 @@ function App() {
 
   return (
     <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-fit'>
+      <Toaster />
       <Header listedItems={listedItems} />
       <Section1 />
       <Categories />
