@@ -18,9 +18,13 @@ import { ChatContext } from '../context/ChatContext';
 import Header from '../components/Header';
 import Messages from '../components/Messages';
 
+import { MdOutlineArrowBackIosNew } from 'react-icons/md';
+import { format } from 'date-fns';
+
 export default function Chat() {
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState([]);
+  const [chatOpen, setChatOpen] = useState(false);
   const [err, setErr] = useState('');
 
   const { currentUser } = useContext(AuthContext);
@@ -65,50 +69,89 @@ export default function Chat() {
 
     const selectHandler = (u) => {
       dispatch({ type: 'CHANGE_USER', payload: u });
+      setChatOpen(!chatOpen);
     };
 
     return (
-      <div>
-        {Object.entries(chat)
-          ?.sort((a, b) => b[1].date - a[1].date)
-          .map((chat) => (
-            <div
-              key={chat[0]}
-              className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white overflow-hidden'
-              onClick={() => selectHandler(chat[1].userInfo)}
-            >
-              <p>{chat[1].userInfo.email}</p>
-              <p>{chat[1].lastMessage?.text}</p>
-            </div>
-          ))}
-        <Messages />
+      <div className='h-full'>
+        {!chatOpen ? (
+          <div className=''>
+            <p className='mx-2 mt-4 border-b-2'>Messages</p>
+            {Object.entries(chat)
+              ?.sort((a, b) => b[1].date - a[1].date)
+              .map((chat) => (
+                <div
+                  key={chat[0]}
+                  className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white overflow-hidden'
+                  onClick={() => selectHandler(chat[1].userInfo)}
+                >
+                  <p className='text-2xl font-bold'>
+                    {chat[1].userInfo.email.split('@')[0].toUpperCase()}
+                  </p>
+                  <p
+                    className='text-lg'
+                    onClick={() =>
+                      console.log(
+                        new Date(
+                          chat[1].date.seconds * 1000 +
+                            chat[1].date.nanoseconds / 1000000
+                        )
+                      )
+                    }
+                  >
+                    Messages: {chat[1].lastMessage?.text}
+                    {/* <ConvertToRealDate
+                      a={chat[1].date.seconds}
+                      b={chat[1].date.nanoseconds}
+                    /> */}
+                  </p>
+                </div>
+              ))}
+          </div>
+        ) : (
+          <div className='h-full'>
+            {' '}
+            <Messages />{' '}
+            {/* <button onClick={() => setChatOpen(!chatOpen)}>back</button> */}
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <div>
-      <div className='flex justify-center items-center h-screen bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900'>
-        <div className='h-5/6 border-4 w-5/6 m-auto justify-center items-center rounded-lg'>
-          <p className='text-center text-xl font-bold mt-2 text-white'>
-            TopFindChat
-          </p>
-          <div className='flex justify-center items-center mt-2'>
-            <input
-              className='border-black w-4/5 h-10 m-auto rounded-xl p-2'
-              placeholder='Search chat'
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
-          </div>
+    <div className='relative h-screen'>
+      <Header />
+      <div className='flex  items-center h-5/6'>
+        <div className='h-full mt-5 border-4 w-5/6 m-auto justify-center items-center rounded-lg '>
+          {chatOpen && (
+            <div className='relative' onClick={() => setChatOpen(!chatOpen)}>
+              <MdOutlineArrowBackIosNew className='text-white mt-2 ml-2 text-2xl absolute' />
+              <span className='absolute mt-2 ml-7 text-white'>back</span>
+            </div>
+          )}
+          {!chatOpen && (
+            <div>
+              <p className='text-center text-xl font-bold mt-2 text-white'>
+                TopFindChat
+              </p>
+              <div className='flex justify-center items-center mt-2'>
+                <input
+                  className='border-black w-4/5 h-10 m-auto rounded-xl p-2'
+                  placeholder='Search chat'
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          )}
           <FilteringItems
             items={user}
             searchBarValue={userName}
             currUser={currentUser}
           />
-          <div className='mt-6 text-white text-xl'>
-            <p className='mx-2 border-b-2'>Messages</p>
+          <div className='h-full flex flex-col text-white text-xl'>
             <ChatGenerator />
           </div>
         </div>
@@ -121,6 +164,7 @@ const FilteringItems = ({ items, searchBarValue, currUser }) => {
   if (searchBarValue.length > 0) {
     return items
       ?.filter((item) =>
+      item.email !== currUser.email &&
         item.email.toLowerCase().includes(searchBarValue.toLowerCase())
       )
       .map((item, i) => {

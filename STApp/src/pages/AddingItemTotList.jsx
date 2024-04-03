@@ -18,6 +18,8 @@ export default function AddingItemTotList() {
   const [category, setCategory] = useState('');
   const [dropdown, setDropdown] = useState(false);
 
+  const inputClassNames = 'my-2 rounded-md pl-2';
+
   const listedItemsCollectionRef = collection(db, 'ListedItems');
 
   // !Adding data to Cloud Firestore ->
@@ -63,16 +65,16 @@ export default function AddingItemTotList() {
   };
 
   return (
-    <div className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
+    <div className='h-screen'>
       <Header />
-      <div className='grid justify-items-center text-xl border rounded-lg mx-2'>
-        <p className='mt-4 font-bold text-white'>List Item :</p>
+      <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-2 mt-5'>
+        <p className='mt-4 font-bold text-white text-2xl'>List Item</p>
 
         <div className='flex'>
           <input
             type='text'
             placeholder='Company...'
-            className='my-2 rounded-md'
+            className={inputClassNames}
             onChange={(e) => {
               setCompany(e.target.value);
             }}
@@ -81,13 +83,13 @@ export default function AddingItemTotList() {
         <input
           type='text'
           placeholder='Description...'
-          className='my-2 rounded-md'
+          className={inputClassNames}
           onChange={(e) => setDescription(e.target.value)}
         />
         <input
           type='text'
           placeholder='Name...'
-          className='my-2 rounded-md'
+          className={inputClassNames}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -95,22 +97,21 @@ export default function AddingItemTotList() {
         <input
           type='number'
           placeholder='Number...'
-          className='my-2 rounded-md'
+          className={inputClassNames}
           onChange={(e) => {
             setNumber(e.target.value);
           }}
         />
         <input
           type='number'
-          placeholder='price...'
-          className='my-2 rounded-md'
+          placeholder='Price...'
+          className={inputClassNames}
           onChange={(e) => {
             setPrice(e.target.value);
           }}
         />
 
         <button
-          // onClick={(e) => console.log(e.target.value)}
           onClick={dropdownBtnHandler}
           id='dropdownDefaultButton'
           data-dropdown-toggle='dropdown'
@@ -125,13 +126,7 @@ export default function AddingItemTotList() {
             fill='none'
             viewBox='0 0 10 6'
           >
-            <path
-              stroke='currentColor'
-              // stroke-linecap='round'
-              // stroke-linejoin='round'
-              // stroke-width='2'
-              d='m1 1 4 4 4-4'
-            />
+            <path stroke='currentColor' d='m1 1 4 4 4-4' />
           </svg>
         </button>
         <div>
@@ -187,7 +182,7 @@ export default function AddingItemTotList() {
 
         <p>{category}</p>
 
-        <div className='text-center border mx-4 py-4 rounded-xl mt-4'>
+        <div className='text-center border mx-4 py-4 rounded-xl mt-4 text-white'>
           <p className='text-xl'>Upload images :</p>
           <input
             className='text-xl w-full px-12 my-4'
@@ -207,7 +202,7 @@ export default function AddingItemTotList() {
           />
         </div>
         <button
-          className='border m-4 rounded-md p-2 bg-indigo-700 text-white'
+          className='border m-4 rounded-md p-2 bg-sky-200 text-black  font-bold'
           onClick={onSubmitHandler}
         >
           List Item

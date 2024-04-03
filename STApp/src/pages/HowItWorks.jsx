@@ -3,9 +3,9 @@ import Header from '../components/Header';
 
 export default function HowItWorks() {
   return (
-    <div className='h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
+    <div className='h-screen'>
       <Header />
-      <div className='text-center pt-10 text-2xl text-white border rounded-lg m-4 p-2 pb-10'>
+      <div className='text-center pt-10 text-2xl text-white border-2 rounded-lg m-4 p-3 pb-10'>
         <p className='text-3xl'>How it works?</p>
         <p className='mt-10'>
           Lorem Ipsum is simply dummy text of the printing and typesetting

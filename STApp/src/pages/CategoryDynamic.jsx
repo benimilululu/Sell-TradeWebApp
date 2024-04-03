@@ -29,7 +29,7 @@ export default function CategoryDynamic() {
   }, []);
 
   return (
-    <div className='text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen overflow-scroll'>
+    <div className='text-center  h-screen text-white overflow-scroll'>
       <Header />
       <p className='mt-5 text-2xl font-bold text-white'>
         {params.cat.toUpperCase()}
@@ -48,7 +48,7 @@ const FilteringItems = ({ items, params }) => {
         <div
           key={item.id}
           className='border-4 p-4 rounded-2xl
-           mx-5 text-center text-xl text-black my-4'
+           mx-5 text-center text-xl  my-4'
         >
           <img className='rounded-xl' src={item.ImageUrl} />
           <p className='mt-5'>

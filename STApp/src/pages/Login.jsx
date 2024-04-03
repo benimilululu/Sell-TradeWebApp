@@ -28,7 +28,6 @@ export default function Login() {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       setEmail('');
       setPassword('');
-      toast.success('Successfully created account!');
       // setTimeout(() => {
       // }, 1200);
       await setDoc(doc(db, 'users', res.user.uid), {
@@ -73,7 +72,7 @@ export default function Login() {
   const showRegisterPage = () => {
     return (
       <div className='text-center text-2xl text-white mt-20'>
-        <div className='text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl'>
+        <div className='text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl '>
           <p className='my-4'>Register</p>
           <input
             type='text'
@@ -89,21 +88,13 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          {auth?.currentUser?.email ? (
-            <button
-              className='border p-2 rounded-2xl py-2 my-2'
-              onClick={logOut}
-            >
-              LogOut
-            </button>
-          ) : (
-            <button
-              className='border p-2 rounded-2xl py-2 my-2'
-              onClick={register}
-            >
-              Register
-            </button>
-          )}
+
+          <button
+            className='border px-4 rounded-2xl text-black font-bold  my-6 bg-sky-200'
+            onClick={register}
+          >
+            Register
+          </button>
         </div>
       </div>
     );
@@ -112,7 +103,7 @@ export default function Login() {
   const showLogInPage = () => {
     return (
       <div className=' text-center text-2xl text-white mt-20'>
-        <div className='grid justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl'>
+        <div className='justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl'>
           <p className='my-4'>Login</p>
           <input
             type='text'
@@ -137,7 +128,7 @@ export default function Login() {
             </button>
           ) : (
             <button
-              className='border p-2 rounded-2xl py-2 my-2'
+              className='border px-4 rounded-2xl text-black font-bold  my-6 bg-sky-200'
               onClick={logIn}
             >
               Login
@@ -152,37 +143,37 @@ export default function Login() {
     if (currentUser) {
       toast.error('Cannot create acc...');
       return <Navigate to='/' />;
-    } 
+    }
 
-    return children
+    return children;
   };
 
   return (
     // <ProtectedRoute>
-      <div className='relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
-        <Toaster />
-        <Header />
-        <div className='w-full  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold'>
-          <p
-            className={`p-1 duration-300 mx-3 ${
-              loginPage ? 'bg-sky-200 rounded-full' : ''
-            }`}
-            onClick={() => setLoginPage(true)}
-          >
-            Login
-          </p>
-          <p
-            className={`p-1 duration-300 mx-3 ${
-              !loginPage ? 'bg-sky-200 rounded-full' : ''
-            }`}
-            onClick={() => setLoginPage(false)}
-          >
-            Register
-          </p>
-        </div>
-        {loginPage && showLogInPage()}
-        {!loginPage && showRegisterPage()}
+    <div className=' h-screen'>
+      <Toaster />
+      <Header />
+      <div className='w-full mt-10  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold'>
+        <p
+          className={`p-1 duration-300 mx-3 ${
+            loginPage ? 'bg-sky-200 rounded-full' : ''
+          }`}
+          onClick={() => setLoginPage(true)}
+        >
+          Login
+        </p>
+        <p
+          className={`p-1 duration-300 mx-3 ${
+            !loginPage ? 'bg-sky-200 rounded-full' : ''
+          }`}
+          onClick={() => setLoginPage(false)}
+        >
+          Register
+        </p>
       </div>
+      {loginPage && showLogInPage()}
+      {!loginPage && showRegisterPage()}
+    </div>
     // </ProtectedRoute>
   );
 }

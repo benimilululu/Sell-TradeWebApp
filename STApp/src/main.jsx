@@ -55,7 +55,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthContextProvider>
     <ChatContextProvider>
       <React.StrictMode>
-        <RouterProvider router={router} />
+        <div className='bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900'>
+          <RouterProvider router={router} />
+        </div>
       </React.StrictMode>
     </ChatContextProvider>
   </AuthContextProvider>

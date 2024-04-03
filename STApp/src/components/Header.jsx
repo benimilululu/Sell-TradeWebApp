@@ -12,9 +12,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 import { FaRocketchat } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
-
-export default function Header({ listedItems }) {
+export default function Header({ listedItems, scrollHandler,currentUser }) {
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +22,8 @@ export default function Header({ listedItems }) {
   const [searchResultIsOpen, setSearchResultsIsOpen] = useState(false);
 
   const searchResultsRef = useRef(null);
+
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     // !Hiding Search Result div if we click outside that div ->
@@ -53,23 +55,24 @@ export default function Header({ listedItems }) {
     }
   };
 
-
-
   return (
     <>
       <Toaster />
-      <div className='text-3xl p-4 text-white grid grid-cols-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
+      <div className='text-3xl p-4 text-white grid grid-cols-2 '>
         <p className='w-fit font-extrabold'>
-          <Link to='/'>TopFind</Link>
+          <Link to='/' onClick={() => {
+            if(isHomePage) {
+              toast.success('This is Home Page... ENJOY!');
+            }
+          }}>TopFind</Link>
         </p>
         <div className='flex justify-end'>
-          {/* <Link to='/login'>
-            <img src={emptyProfilePic} alt='EmptyPP' className='size-10 mr-3' />
-          </Link> */}
           <MenuButton
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             genericHamburgerLine={genericHamburgerLine}
+            scrollHandler={scrollHandler}
+            isHomePage={isHomePage}
           />
 
           {isOpen && (
@@ -80,17 +83,20 @@ export default function Header({ listedItems }) {
             />
           )}
         </div>
-        <div className='flex mt-4'>
-          <p className='text-2xl'>Search</p>
-          <input
-            type='text'
-            value={searchBarValue}
-            className='ml-4 text-black rounded-lg w-fit'
-            onChange={(e) => {
-              storingInputValue(e);
-            }}
-          />
-        </div>
+        {isHomePage && (
+          <div className='flex mt-4'>
+            <p className='text-2xl'>Search</p>
+            <input
+              type='text'
+              value={searchBarValue}
+              className='ml-4 text-black rounded-lg w-fit'
+              onChange={(e) => {
+                storingInputValue(e);
+              }}
+            />
+          </div>
+        )}
+
         <div></div>
         {searchResultIsOpen && (
           <div
@@ -103,12 +109,14 @@ export default function Header({ listedItems }) {
             />
           </div>
         )}
-        <div className='fixed bottom-2 right-2 size-5 border-2 h-28 w-28 object-cover backdrop-blur-xl rounded-full'>
-          <Link to='/chat'>
-            <FaRocketchat className='h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
-          <p className='m-auto text-center text-xl'>Chat</p>
-          </Link>
-        </div>
+        {isHomePage && currentUser && (
+          <div className={`fixed bottom-2 right-2 size-5 border-2 h-28 w-28 object-cover backdrop-blur-xl rounded-full`}>
+            <Link to='/chat'>
+              <FaRocketchat className='h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
+              <p className='m-auto text-center text-xl'>Chat</p>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );
@@ -139,11 +147,16 @@ const FilteringItems = ({ items, searchBarValue }) => {
     ));
 };
 
-const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine }) => {
+const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine, scrollHandler, isHomePage}) => {
   return (
     <button
       className='flex flex-col h-10 w-10 border-2  rounded justify-center items-center group'
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={() => {
+        setIsOpen(!isOpen) 
+        if(isHomePage) {
+          return scrollHandler()
+        }
+      }}
     >
       <div
         className={`${genericHamburgerLine} ${
@@ -168,23 +181,24 @@ const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine }) => {
   );
 };
 
+const HamburgerMenu = ({ e, isOpen, isOpenDiv, ref, setIsOpen }) => {
 
-const HamburgerMenu = ({e, isOpen, isOpenDiv}) => {
   const nav = useNavigate();
 
-   const logOut = async () => {
-     try {
-       await signOut(auth);
-       toast.success('Successfully Logged Out!');
-       nav('/');
-     } catch (err) {
-       console.error(err);
-     }
-   };
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      toast.success('Successfully Logged Out!');
+      nav('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div
-      className={`animate-slide-down absolute mt-12 grid text-center w-11/12 border rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 drop-shadow-2xl `}
+      className={`fixed animate-slide-down  mt-12 grid text-center w-11/12 border rounded-xl  drop-shadow-2xl backdrop-blur-3xl `}
+
     >
       {e ? (
         <Link className='border rounded-lg m-4 p-2' to='/profile'>
@@ -220,4 +234,4 @@ const HamburgerMenu = ({e, isOpen, isOpenDiv}) => {
       )}
     </div>
   );
-}
+};

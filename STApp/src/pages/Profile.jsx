@@ -11,7 +11,7 @@ export default function Profile() {
   console.log(userEmail)
 
   return (
-    <div className='h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-scroll'>
+    <div className='h-screen overflow-scroll'>
       <Header />
       <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white'>
         <p>My Profile</p>
