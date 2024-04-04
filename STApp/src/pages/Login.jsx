@@ -72,7 +72,7 @@ export default function Login() {
   const showRegisterPage = () => {
     return (
       <div className='text-center text-2xl text-white mt-20'>
-        <div className='text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl '>
+        <div className='text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
           <p className='my-4'>Register</p>
           <input
             type='text'
@@ -103,7 +103,7 @@ export default function Login() {
   const showLogInPage = () => {
     return (
       <div className=' text-center text-2xl text-white mt-20'>
-        <div className='justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white drop-shadow-2xl'>
+        <div className='justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
           <p className='my-4'>Login</p>
           <input
             type='text'

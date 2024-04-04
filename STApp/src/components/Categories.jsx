@@ -55,10 +55,10 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className='text-black text-center border-y-4 pt-1 pb-5'>
+    <section className='text-black text-center border-y-4 pt-1 pb-5 animate-fade-in-from-bottom '>
       <p className='text-3xl font-bold text-white text-center'>Categories</p>
       {showCategories ? (
-        <>
+        <div className='animate-fade-in-from-bottom'>
           <p className='mt-2 text-2xl text-white font-bold text-start ml-4'>
             Shoes
           </p>
@@ -79,7 +79,7 @@ export default function Categories() {
               />
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div className='h-5/6 flex items-center justify-center pb-44'>
@@ -103,11 +103,12 @@ export default function Categories() {
 }
 
 const CategoriesHandler2 = ({ cat, setShowCategories }) => {
+
   return cat.map((obj, index) => (
     <Link to={`/categories/${obj.cat}`}>
       <div
         className='border-4 rounded-2xl h-48  align-text-bottom mb-5'
-        key={index}
+        key={index + 1}
       >
         <img
           className='rounded-xl h-full w-full object-cover'

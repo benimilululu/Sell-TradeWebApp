@@ -32,7 +32,6 @@
   animation: slide-up 0.5s ease-out;
 }
 
-
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -101,3 +100,33 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+@keyframes fadeInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px); /* Start slightly left */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0); /* Fade in to normal position */
+  }
+}
+
+.animate-fade-in-from-left {
+  animation: fadeInFromLeft 1s ease-out;
+}
+
+@keyframes fadeInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px); /* Start slightly below */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Fade in to normal position */
+  }
+}
+
+.animate-fade-in-from-bottom {
+  animation: fadeInFromBottom 1s ease-out;
+}

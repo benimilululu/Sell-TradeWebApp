@@ -1,26 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../components/Header';
+import { AuthContext } from '../context/AuthContext';
 
 import { auth } from '../config/firebase';
 import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import { Fade } from 'react-reveal';
 
 export default function Profile() {
-  const userEmail = auth?.currentUser?.email;
+  // const userEmail = auth?.currentUser?.email;
 
-  console.log(userEmail)
+  const { currentUser } = useContext(AuthContext);
+
+
+  // console.log(userEmail)
 
   return (
     <div className='h-screen overflow-scroll'>
       <Header />
-      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white'>
+      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white animate-fade-in-from-bottom'>
         <p>My Profile</p>
-        <p className='mt-4'>Email: {userEmail}</p>
+        <p className='mt-4'>Email: {currentUser.email}</p>
         <div className='mt-5'></div>
       </div>
-      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white overflow-scroll'>
+      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white overflow-scroll animate-fade-in-from-bottom'>
         <p>My Listing's</p>
-        <GetFilteredItems user={userEmail}/>
+        <GetFilteredItems user={currentUser.email} />
       </div>
     </div>
   );
@@ -76,6 +81,4 @@ const GetFilteredItems = ({user}) => {
       </p>
     );
   }
-
-  // return <div>{listedItems}</div>;
 };

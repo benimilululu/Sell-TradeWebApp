@@ -7,9 +7,9 @@ export default function Section1({ loadedSection1Img }) {
 
   return (
     <section>
-      <div>
+      <div className='animate-fade-in-from-left'>
         {imgIsLoaded && (
-          <div className='grid justify-items-center mt-10 text-5xl text-white font-bold text-center'>
+          <div className=' grid justify-items-center mt-10 text-5xl text-white font-bold text-center'>
             {text}
           </div>
         )}

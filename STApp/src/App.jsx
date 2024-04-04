@@ -11,6 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { InfinitySpin } from 'react-loader-spinner';
 
 import { Fade } from 'react-reveal';
+import ChatIcon from './components/ChatIcon';
 
 function App() {
   const [listedItems, setListedItems] = useState([]);
@@ -77,20 +78,20 @@ function App() {
       ) : (
         <>
           <Toaster />
-          <Fade top>
+          {/* <Fade top > */}
             <Header
               listedItems={listedItems}
               scrollHandler={scrollHandler}
               currentUser={currentUser}
             />
-          </Fade>
+          {/* </Fade> */}
 
-          <Fade right>
+          {/* <Fade right> */}
             <Section1 loadedSection1Img={loaderHandler} />
-          </Fade>
-          <Fade left>
+          {/* </Fade> */}
+          {/* <Fade left> */}
             <Categories />
-          </Fade>
+          {/* </Fade> */}
           <AboutUs />
         </>
       )}

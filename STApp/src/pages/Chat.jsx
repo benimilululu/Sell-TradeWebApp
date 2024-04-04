@@ -17,9 +17,9 @@ import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
 import Header from '../components/Header';
 import Messages from '../components/Messages';
+import { useLocation } from 'react-router-dom';
 
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
-import { format } from 'date-fns';
 
 export default function Chat() {
   const [userName, setUserName] = useState('');
@@ -29,6 +29,16 @@ export default function Chat() {
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+
+  const location = useLocation();
+  const { action } = location.state || {};
+
+  useEffect(() => {
+    if (action) {
+      // Perform your action here
+      console.log(action);
+    }
+  }, [action]);
 
   useEffect(() => {
     const searchResultHandler = async () => {
@@ -75,7 +85,7 @@ export default function Chat() {
     return (
       <div className='h-full'>
         {!chatOpen ? (
-          <div className=''>
+          <div className='animate-fade-in-from-bottom'>
             <p className='mx-2 mt-4 border-b-2'>Messages</p>
             {Object.entries(chat)
               ?.sort((a, b) => b[1].date - a[1].date)
@@ -83,7 +93,11 @@ export default function Chat() {
                 <div
                   key={chat[0]}
                   className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white overflow-hidden'
-                  onClick={() => selectHandler(chat[1].userInfo)}
+                  onClick={() => {
+                    selectHandler(chat[1].userInfo)
+                    console.log(chat[1].userInfo);
+                    setUserName('')
+                  }}
                 >
                   <p className='text-2xl font-bold'>
                     {chat[1].userInfo.email.split('@')[0].toUpperCase()}
@@ -122,7 +136,7 @@ export default function Chat() {
   return (
     <div className='relative h-screen'>
       <Header />
-      <div className='flex  items-center h-5/6'>
+      <div className='flex  items-center h-5/6 animate-fade-in-from-bottom'>
         <div className='h-full mt-5 border-4 w-5/6 m-auto justify-center items-center rounded-lg '>
           {chatOpen && (
             <div className='relative' onClick={() => setChatOpen(!chatOpen)}>
@@ -146,11 +160,11 @@ export default function Chat() {
               </div>
             </div>
           )}
-          <FilteringItems
+          {!chatOpen &&  <FilteringItems
             items={user}
             searchBarValue={userName}
             currUser={currentUser}
-          />
+          />}
           <div className='h-full flex flex-col text-white text-xl'>
             <ChatGenerator />
           </div>

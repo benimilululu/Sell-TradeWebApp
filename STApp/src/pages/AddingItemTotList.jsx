@@ -67,7 +67,7 @@ export default function AddingItemTotList() {
   return (
     <div className='h-screen'>
       <Header />
-      <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-2 mt-5'>
+      <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-2 mt-5 animate-fade-in-from-bottom'>
         <p className='mt-4 font-bold text-white text-2xl'>List Item</p>
 
         <div className='flex'>

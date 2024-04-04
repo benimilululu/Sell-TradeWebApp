@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaRocketchat } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
-export default function Header({ listedItems, scrollHandler,currentUser }) {
+import { Fade } from 'react-reveal';
+
+export default function Header({ listedItems, scrollHandler, currentUser }) {
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,31 +58,43 @@ export default function Header({ listedItems, scrollHandler,currentUser }) {
   };
 
   return (
-    <>
+    <div className=''>
       <Toaster />
       <div className='text-3xl p-4 text-white grid grid-cols-2 '>
-        <p className='w-fit font-extrabold'>
-          <Link to='/' onClick={() => {
-            if(isHomePage) {
-              toast.success('This is Home Page... ENJOY!');
-            }
-          }}>TopFind</Link>
-        </p>
+        <Fade top duration={1500}>
+          <p className='w-fit font-extrabold'>
+            <Link
+              to='/'
+              onClick={() => {
+                if (isHomePage) {
+                  toast.success('This is Home Page... ENJOY!');
+                }
+              }}
+              className=''
+            >
+              TopFind
+            </Link>
+          </p>
+        </Fade>
         <div className='flex justify-end'>
-          <MenuButton
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            genericHamburgerLine={genericHamburgerLine}
-            scrollHandler={scrollHandler}
-            isHomePage={isHomePage}
-          />
+          <Fade top duration={1500}>
+            <MenuButton
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              genericHamburgerLine={genericHamburgerLine}
+              scrollHandler={scrollHandler}
+              isHomePage={isHomePage}
+            />
+          </Fade>
 
           {isOpen && (
-            <HamburgerMenu
+               <HamburgerMenu
               e={auth?.currentUser?.email}
               isOpen={setIsOpen}
               isOpenDiv={isOpen}
             />
+
+           
           )}
         </div>
         {isHomePage && (
@@ -100,7 +114,7 @@ export default function Header({ listedItems, scrollHandler,currentUser }) {
         <div></div>
         {searchResultIsOpen && (
           <div
-            className='absolute inset-y-28 left-24 border-2 w-2/3 h-2/4 rounded-3xl backdrop-blur-xl overflow-scroll'
+            className='fixed inset-y-28 left-28 border-2 w-4/6 h-96 rounded-3xl backdrop-blur-xl overflow-scroll bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900'
             ref={searchResultsRef}
           >
             <FilteringItems
@@ -110,15 +124,19 @@ export default function Header({ listedItems, scrollHandler,currentUser }) {
           </div>
         )}
         {isHomePage && currentUser && (
-          <div className={`fixed bottom-2 right-2 size-5 border-2 h-28 w-28 object-cover backdrop-blur-xl rounded-full`}>
-            <Link to='/chat'>
-              <FaRocketchat className='h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
-              <p className='m-auto text-center text-xl'>Chat</p>
-            </Link>
-          </div>
+          <Fade bottom duration={1500}>
+            <div
+              className={`fixed bottom-2 right-2 size-5 border-4 h-28 w-28 object-cover backdrop-blur-xl rounded-full`}
+            >
+              <Link to='/chat'>
+                <FaRocketchat className=' h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
+                <p className='m-auto text-center text-xl font-bold'>Chat</p>
+              </Link>
+            </div>
+          </Fade>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -147,14 +165,20 @@ const FilteringItems = ({ items, searchBarValue }) => {
     ));
 };
 
-const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine, scrollHandler, isHomePage}) => {
+const MenuButton = ({
+  isOpen,
+  setIsOpen,
+  genericHamburgerLine,
+  scrollHandler,
+  isHomePage,
+}) => {
   return (
     <button
       className='flex flex-col h-10 w-10 border-2  rounded justify-center items-center group'
       onClick={() => {
-        setIsOpen(!isOpen) 
-        if(isHomePage) {
-          return scrollHandler()
+        setIsOpen(!isOpen);
+        if (isHomePage) {
+          return scrollHandler();
         }
       }}
     >
@@ -182,7 +206,6 @@ const MenuButton = ({ isOpen, setIsOpen, genericHamburgerLine, scrollHandler, is
 };
 
 const HamburgerMenu = ({ e, isOpen, isOpenDiv, ref, setIsOpen }) => {
-
   const nav = useNavigate();
 
   const logOut = async () => {
@@ -197,8 +220,7 @@ const HamburgerMenu = ({ e, isOpen, isOpenDiv, ref, setIsOpen }) => {
 
   return (
     <div
-      className={`fixed animate-slide-down  mt-12 grid text-center w-11/12 border rounded-xl  drop-shadow-2xl backdrop-blur-3xl `}
-
+      className={`fixed animate-slide-down  mt-12 grid text-center w-11/12 border rounded-xl  drop-shadow-2xl backdrop-blur-3xl bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900`}
     >
       {e ? (
         <Link className='border rounded-lg m-4 p-2' to='/profile'>
