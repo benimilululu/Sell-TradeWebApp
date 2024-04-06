@@ -14,6 +14,8 @@ import Profile from './pages/Profile.jsx';
 import Chat from './pages/Chat.jsx';
 import { AuthContext, AuthContextProvider } from './context/AuthContext.jsx';
 import { ChatContextProvider } from './context/ChatContext.jsx';
+import { NightModeContextProvider } from './context/NightModeContext.jsx';
+// import { NightModeContext } from '../context/NightModeContext';
 
 const router = createBrowserRouter([
   {
@@ -54,11 +56,13 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthContextProvider>
     <ChatContextProvider>
-      <React.StrictMode>
-        <div className='bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900'>
-          <RouterProvider router={router} />
-        </div>
-      </React.StrictMode>
+      <NightModeContextProvider>
+        <React.StrictMode>
+          <div>
+            <RouterProvider router={router} />
+          </div>
+        </React.StrictMode>
+      </NightModeContextProvider>
     </ChatContextProvider>
   </AuthContextProvider>
 );

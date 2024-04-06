@@ -22,6 +22,8 @@ export default function AddingItemTotList() {
 
   const listedItemsCollectionRef = collection(db, 'ListedItems');
 
+
+
   // !Adding data to Cloud Firestore ->
   const onSubmitHandler = async () => {
     try {
@@ -67,10 +69,10 @@ export default function AddingItemTotList() {
   return (
     <div className='h-screen'>
       <Header />
-      <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-2 mt-5 animate-fade-in-from-bottom'>
-        <p className='mt-4 font-bold text-white text-2xl'>List Item</p>
+      <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-6 mt-5 animate-fade-in-from-bottom h-5/6'>
+        <p className='mt-4 font-bold text-white text-3xl h-fit'>LIST ITEM</p>
 
-        <div className='flex'>
+        <form className='grid w-5/6'>
           <input
             type='text'
             placeholder='Company...'
@@ -78,135 +80,144 @@ export default function AddingItemTotList() {
             onChange={(e) => {
               setCompany(e.target.value);
             }}
+            required
           />
-        </div>
-        <input
-          type='text'
-          placeholder='Description...'
-          className={inputClassNames}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Name...'
-          className={inputClassNames}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <input
-          type='number'
-          placeholder='Number...'
-          className={inputClassNames}
-          onChange={(e) => {
-            setNumber(e.target.value);
-          }}
-        />
-        <input
-          type='number'
-          placeholder='Price...'
-          className={inputClassNames}
-          onChange={(e) => {
-            setPrice(e.target.value);
-          }}
-        />
-
-        <button
-          onClick={dropdownBtnHandler}
-          id='dropdownDefaultButton'
-          data-dropdown-toggle='dropdown'
-          className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-2 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-lg'
-          type='button'
-        >
-          Category{' '}
-          <svg
-            className='w-2.5 h-2.5 ms-3'
-            aria-hidden='true'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 10 6'
-          >
-            <path stroke='currentColor' d='m1 1 4 4 4-4' />
-          </svg>
-        </button>
-        <div>
-          <div
-            id='dropdown'
-            className={`z-10 ${
-              !dropdown && 'hidden'
-            } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 mt-2 absolute`}
-          >
-            <ul
-              className='py-2 text-sm text-gray-700 dark:text-gray-200'
-              aria-labelledby='dropdownDefaultButton'
-            >
-              <li>
-                <a
-                  onClick={(e) => categoryHandler(e)}
-                  href='#'
-                  className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  casual
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={(e) => categoryHandler(e)}
-                  href='#'
-                  className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  basketball
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={(e) => categoryHandler(e)}
-                  href='#'
-                  className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  football
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={(e) => categoryHandler(e)}
-                  href='#'
-                  className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  boots
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <p>{category}</p>
-
-        <div className='text-center border mx-4 py-4 rounded-xl mt-4 text-white'>
-          <p className='text-xl'>Upload images :</p>
           <input
-            className='text-xl w-full px-12 my-4'
-            type='file'
-            onChange={(e) => imageUploadHandler(e)}
-            multiple
+            type='text'
+            placeholder='Description...'
+            className={inputClassNames}
+            onChange={(e) => setDescription(e.target.value)}
+            required
           />
-        </div>
-        <div className='my-2'>
-          <label className='text-white'>New</label>
           <input
-            type='checkbox'
-            className='ml-3'
+            type='text'
+            placeholder='Name...'
+            className={inputClassNames}
             onChange={(e) => {
-              setIsNew(e.target.checked);
+              setName(e.target.value);
+            }}
+            required
+          />
+          <input
+            type='number'
+            placeholder='Number...'
+            required
+            className={inputClassNames}
+            onChange={(e) => {
+              setNumber(e.target.value);
+              required;
             }}
           />
-        </div>
-        <button
-          className='border m-4 rounded-md p-2 bg-sky-200 text-black  font-bold'
-          onClick={onSubmitHandler}
-        >
-          List Item
-        </button>
+          <input
+            type='number'
+            required
+            placeholder='Price...'
+            className={inputClassNames}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+          />
+
+          <button
+            onClick={dropdownBtnHandler}
+            id='dropdownDefaultButton'
+            data-dropdown-toggle='dropdown'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-2 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-lg'
+            type='button'
+          >
+            Category{' '}
+            <svg
+              className='w-2.5 h-2.5 ms-3'
+              aria-hidden='true'
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 10 6'
+            >
+              <path stroke='currentColor' d='m1 1 4 4 4-4' />
+            </svg>
+          </button>
+          <div>
+            <div
+              id='dropdown'
+              required
+              className={`z-10 ${
+                !dropdown && 'hidden'
+              } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 mt-2 absolute`}
+            >
+              <ul
+                className='py-2 text-sm text-gray-700 dark:text-gray-200'
+                aria-labelledby='dropdownDefaultButton'
+              >
+                <li>
+                  <a
+                    onClick={(e) => categoryHandler(e)}
+                    href='#'
+                    className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                  >
+                    casual
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={(e) => categoryHandler(e)}
+                    href='#'
+                    className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                  >
+                    basketball
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={(e) => categoryHandler(e)}
+                    href='#'
+                    className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                  >
+                    football
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={(e) => categoryHandler(e)}
+                    href='#'
+                    className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                  >
+                    boots
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p>{category}</p>
+
+          <div className='text-center border mx-4 py-4 rounded-xl mt-4 text-white'>
+            <p className='text-xl'>Upload image :</p>
+            <input
+            required
+              className='text-xl w-full px-12 my-4'
+              type='file'
+              onChange={(e) => imageUploadHandler(e)}
+              multiple
+            />
+          </div>
+          <div className='my-2'>
+            <label className='text-white'>New</label>
+            <input
+              type='checkbox'
+              className='ml-3'
+              onChange={(e) => {
+                setIsNew(e.target.checked);
+              }}
+            />
+          </div>
+          <button
+            className='border m-4 rounded-md p-2 bg-sky-200 text-black  font-bold'
+            onClick={onSubmitHandler}
+            type='submit'
+          >
+            List Item
+          </button>
+        </form>
       </div>
     </div>
   );
