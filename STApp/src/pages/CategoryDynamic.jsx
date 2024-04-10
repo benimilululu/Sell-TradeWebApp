@@ -48,7 +48,7 @@ export default function CategoryDynamic() {
   }, []);
 
   return (
-    <div className='text-center  h-screen text-white overflow-scroll'>
+    <div className='text-center w-screen  h-screen text-white overflow-scroll'>
       <Header />
       <div className='animate-fade-in-from-bottom'>
         <p className='mt-5 text-2xl font-bold text-white'>
@@ -118,38 +118,15 @@ const FilteringItems = ({ items, params, showItems }) => {
           </p>
           <p>Size : {item.Number}</p>
           <p>Price : {item.Price}$</p>
-          <p>Owner : {item.UserID}</p>
+          <p>Owner : {item.UserID.split('@')[0]}</p>
         </div>
         </Link>
         
       ));
+    } else {
+      showItems(false)
     }
-    //  else if (!filteredItems.length) {
-    //   return (
-    //     <p className='mt-20 text-white font-bold text-2xl'>
-    //       Sorry there are no items in this Category . . .
-    //     </p>
-    //   );
-    // }
   };
 
   return display();
-
-  //   return items
-  //     ?.filter((item) => item.Cat === params)
-  //     .map((item) => (
-  //       <div
-  //         key={item.id}
-  //         className='border p-4 rounded-2xl
-  //            mx-5 text-center text-xl text-black my-4'
-  //       >
-  //         <img className='rounded-xl' src={item.ImageUrl} />
-  //         <p className='mt-5'>
-  //           Name: {item.Company} {item.Name}
-  //         </p>
-  //         <p>Size : {item.Number}</p>
-  //         <p>Price : {item.Price}$</p>
-  //         <p>Owner : {item.UserID}</p>
-  //       </div>
-  //     ));
 };

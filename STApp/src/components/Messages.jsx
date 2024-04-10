@@ -8,6 +8,8 @@ import {
   updateDoc,
   Timestamp,
   serverTimestamp,
+  getDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { v4 as uuid } from 'uuid';
@@ -18,8 +20,43 @@ export default function Messages() {
   const { currentUser } = useContext(AuthContext);
 
   //   Sending message to the backend ->
-  const sendHandler = async () => {
+  const sendHandler = async (data) => {
     if (text.length) {
+      // Generating chat if there is no chat
+      const combinedId =
+        currentUser.uid > data.user.uid
+          ? currentUser.uid + data.user.uid
+          : data.user.uid + currentUser.uid;
+
+      console.log(data.user);
+      // try {
+        const res = await getDoc(doc(db, 'chats', combinedId));
+        if (!res.exists()) {
+          //create a chat in chats collection
+          await setDoc(doc(db, 'chats', combinedId), { messages: [] });
+
+          //create user chats
+          await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
+            [combinedId + '.userInfo']: {
+              uid: data.user.uid,
+              email: data.user.email,
+            },
+            [combinedId + '.date']: serverTimestamp(),
+          });
+
+          await updateDoc(doc(db, 'chatUsers', data.user.uid), {
+            [combinedId + '.userInfo']: {
+              uid: currentUser.uid,
+              email: currentUser.email,
+            },
+            [combinedId + '.date']: serverTimestamp(),
+          });
+        }
+      // // } catch (err) {
+      // //   console.error(err);
+      // // }
+      // //
+
       await updateDoc(doc(db, 'chats', data.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -34,17 +71,16 @@ export default function Messages() {
         },
         [data.chatId + '.date']: serverTimestamp(),
       });
-  
+
       await updateDoc(doc(db, 'chatUsers', data.user.uid), {
         [data.chatId + '.lastMessage']: {
           text,
         },
         [data.chatId + '.date']: serverTimestamp(),
       });
-  
+
       setText('');
     }
-
   };
 
   return (
@@ -59,7 +95,7 @@ export default function Messages() {
             <MessagesData />
           </div>
 
-          <div className='grid grid-cols-4 mt-3 border-t'>
+          <div className=' bottom-0 grid grid-cols-4 mt-3 border-t'>
             <input
               placeholder='Type Message'
               className=' text-black p-1 rounded-lg col-span-3 m-3'
@@ -68,7 +104,7 @@ export default function Messages() {
             />
             <button
               className='bg-sky-500/75 border m-3 p-1 rounded-xl w-5/6'
-              onClick={sendHandler}
+              onClick={() => sendHandler(data)}
             >
               Send
             </button>
@@ -100,7 +136,7 @@ const MessagesData = () => {
     };
   }, [data.chatId]);
 
-//   console.log(messages);
+  //   console.log(messages);
 
   return (
     <div className='h-full my-5 overflow-scroll'>

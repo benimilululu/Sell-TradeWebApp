@@ -71,13 +71,13 @@ export default function Login() {
 
   const showRegisterPage = () => {
     return (
-      <div className='text-center text-2xl text-white mt-20'>
-        <div className='text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
+      <div className='w-screen text-center text-2xl text-white mt-20'>
+        <div className='grid text-2xl border-4 rounded-lg mx-10 p-4 mt-10 justify-items-center text-white'>
           <p className='my-4'>Register</p>
           <input
             type='text'
             placeholder='Email...'
-            className='my-2 rounded-lg text-black text-xl p-1'
+            className='my-2 rounded-lg text-black  text-xl p-1'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
@@ -90,7 +90,7 @@ export default function Login() {
           />
 
           <button
-            className='border px-4 rounded-2xl text-black font-bold  my-6 bg-sky-200'
+            className='border px-4 rounded-2xl  font-bold text-black  my-6 bg-sky-200'
             onClick={register}
           >
             Register
@@ -102,33 +102,33 @@ export default function Login() {
 
   const showLogInPage = () => {
     return (
-      <div className=' text-center text-2xl text-white mt-20'>
-        <div className='justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
+      <div className='w-screen text-center text-2xl text-white mt-20'>
+        <div className='grid justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
           <p className='my-4'>Login</p>
           <input
             type='text'
             placeholder='Email...'
-            className='my-2 rounded-lg text-xl text-black p-1'
+            className='my-2 rounded-lg text-xl text-black  p-1'
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
           <input
             type='password'
             placeholder='Password...'
-            className='my-2 rounded-lg text-xl text-black p-1'
+            className='my-2 rounded-lg text-xl text-black  p-1'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
           {auth?.currentUser?.email ? (
             <button
-              className='border p-2 rounded-2xl py-2 my-2'
+              className='border p-2 rounded-2xl my-2 text-black bg-sky-200'
               onClick={logOut}
             >
               LogOut
             </button>
           ) : (
             <button
-              className='border px-4 rounded-2xl text-black font-bold  my-6 bg-sky-200'
+              className='border  rounded-2xl  font-bold text-black my-6 bg-sky-200'
               onClick={logIn}
             >
               Login
@@ -153,10 +153,10 @@ export default function Login() {
     <div className=' h-screen'>
       <Toaster />
       <Header />
-      <div className='w-full mt-10  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold'>
+      <div className='w-full mt-10  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold text-white'>
         <p
           className={`p-1 duration-300 mx-3 ${
-            loginPage ? 'bg-sky-200 rounded-full' : ''
+            loginPage ? 'bg-sky-200 rounded-full text-black' : ''
           }`}
           onClick={() => setLoginPage(true)}
         >
@@ -164,7 +164,7 @@ export default function Login() {
         </p>
         <p
           className={`p-1 duration-300 mx-3 ${
-            !loginPage ? 'bg-sky-200 rounded-full' : ''
+            !loginPage ? 'bg-sky-200 rounded-full text-black' : ''
           }`}
           onClick={() => setLoginPage(false)}
         >

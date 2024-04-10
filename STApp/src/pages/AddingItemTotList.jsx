@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db, imgDB } from '../config/firebase';
 import { getDocs, collection, addDoc } from 'firebase/firestore';
 import { v4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Header from '../components/Header';
+
+import { Navigate, useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
+import { useLocation } from 'react-router-dom';
 
 // import { Dropdown } from 'primereact/dropdown';
 
@@ -18,29 +23,44 @@ export default function AddingItemTotList() {
   const [category, setCategory] = useState('');
   const [dropdown, setDropdown] = useState(false);
 
-  const inputClassNames = 'my-2 rounded-md pl-2';
+  const nav = useNavigate();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      const action = location.state.action;
+      console.log('Received action:', action);
+    } else {
+      console.log('No state received');
+    }
+  }, [location]);
+
+  const inputClassNames = 'my-2 w-full rounded-md pl-2';
 
   const listedItemsCollectionRef = collection(db, 'ListedItems');
 
-
-
   // !Adding data to Cloud Firestore ->
   const onSubmitHandler = async () => {
-    try {
-      await addDoc(listedItemsCollectionRef, {
-        Company: company,
-        Condition: isNew,
-        Description: description,
-        Name: name,
-        Number: number,
-        Price: price,
-        UserID: auth?.currentUser?.email,
-        ImageUrl: img,
-        Cat: category,
-      });
-      console.log(img);
-    } catch (err) {
-      console.error(err);
+    if (img && category) {
+      try {
+        await addDoc(listedItemsCollectionRef, {
+          Company: company,
+          Condition: isNew,
+          Description: description,
+          Name: name,
+          Number: number,
+          Price: price,
+          UserID: auth?.currentUser?.email,
+          ImageUrl: img,
+          Cat: category,
+        });
+        toast.success('Successfully Added Item!');
+        nav('/');
+        console.log(img);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -68,61 +88,77 @@ export default function AddingItemTotList() {
 
   return (
     <div className='h-screen'>
+      <Toaster />
       <Header />
       <div className='grid justify-items-center text-xl border-2 p-5 rounded-lg mx-6 mt-5 animate-fade-in-from-bottom h-5/6'>
-        <p className='mt-4 font-bold text-white text-3xl h-fit'>LIST ITEM</p>
+        <p className=' font-bold text-white text-3xl '>LIST ITEM</p>
 
-        <form className='grid w-5/6'>
-          <input
-            type='text'
-            placeholder='Company...'
-            className={inputClassNames}
-            onChange={(e) => {
-              setCompany(e.target.value);
-            }}
-            required
-          />
-          <input
-            type='text'
-            placeholder='Description...'
-            className={inputClassNames}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-          <input
-            type='text'
-            placeholder='Name...'
-            className={inputClassNames}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            required
-          />
-          <input
-            type='number'
-            placeholder='Number...'
-            required
-            className={inputClassNames}
-            onChange={(e) => {
-              setNumber(e.target.value);
-              required;
-            }}
-          />
-          <input
-            type='number'
-            required
-            placeholder='Price...'
-            className={inputClassNames}
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-          />
+        <form className='grid w-5/6 '>
+          <div className='mt-2'>
+            <p className='text-white'>Product Company</p>
+            <input
+              type='text'
+              placeholder='Company...'
+              className={inputClassNames}
+              onChange={(e) => {
+                setCompany(e.target.value);
+              }}
+              required
+            />
+          </div>
+          <div className='mt-2'>
+            <p className='text-white'>Description</p>
+            <input
+              type='text'
+              placeholder='Description...'
+              className={inputClassNames}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+          <div className='mt-2'>
+            <p className='text-white'>Name of the item</p>
+            <input
+              type='text'
+              placeholder='Name...'
+              className={inputClassNames}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              required
+            />
+          </div>
+          <div className='mt-2'>
+            <p className='text-white'>Number / Size</p>
+            <input
+              type='number'
+              placeholder='Number...'
+              required
+              className={inputClassNames}
+              onChange={(e) => {
+                setNumber(e.target.value);
+                required;
+              }}
+            />
+          </div>
+          <div className='mt-2'>
+            <p className='text-white'>Price</p>
+            <input
+              type='number'
+              required
+              placeholder='Price...'
+              className={inputClassNames}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            />
+          </div>
 
           <button
             onClick={dropdownBtnHandler}
             id='dropdownDefaultButton'
             data-dropdown-toggle='dropdown'
-            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-2 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-lg'
+            className='mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-2 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-lg'
             type='button'
           >
             Category{' '}
@@ -193,7 +229,7 @@ export default function AddingItemTotList() {
           <div className='text-center border mx-4 py-4 rounded-xl mt-4 text-white'>
             <p className='text-xl'>Upload image :</p>
             <input
-            required
+              required
               className='text-xl w-full px-12 my-4'
               type='file'
               onChange={(e) => imageUploadHandler(e)}

@@ -7,16 +7,17 @@ import { db } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { Fade } from 'react-reveal';
 
+import { Link } from 'react-router-dom';
+
 export default function Profile() {
   // const userEmail = auth?.currentUser?.email;
 
   const { currentUser } = useContext(AuthContext);
 
-
   // console.log(userEmail)
 
   return (
-    <div className='h-screen overflow-scroll'>
+    <div className='h-screen w-screen overflow-scroll'>
       <Header />
       <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white animate-fade-in-from-bottom'>
         <p>My Profile</p>
@@ -31,7 +32,7 @@ export default function Profile() {
   );
 }
 
-const GetFilteredItems = ({user}) => {
+const GetFilteredItems = ({ user }) => {
   const [listedItems, setListedItems] = useState([]);
 
   const listedItemsCollectionRef = collection(db, 'ListedItems');
@@ -54,8 +55,7 @@ const GetFilteredItems = ({user}) => {
   }, []);
 
   const filteredItems = listedItems?.filter((item) => {
-    return item.UserID === user
-    console.log(user, item.UserID);
+    return item.UserID === user;
   });
 
   if (filteredItems.length) {
@@ -76,9 +76,14 @@ const GetFilteredItems = ({user}) => {
     ));
   } else {
     return (
-      <p className='mt-20 text-white font-bold text-2xl'>
-        You have no listing's yet . . .
-      </p>
+      <div>
+        <p className='mt-20 text-white font-bold text-2xl'>
+          You have no listing's yet . . .
+          <Link to={'/list-item'}>
+            <button className='mt-4 border-2 rounded-xl p-2'>Start listing Item's</button>
+          </Link>
+        </p>
+      </div>
     );
   }
 };

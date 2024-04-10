@@ -1,16 +1,18 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { db, auth } from '../config/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 import Header from '../components/Header';
 
 export default function Item() {
   const params = useParams();
   const [listedItems, setListedItems] = useState([]);
+  const { currentUser } = useContext(AuthContext);
 
   const listedItemsCollectionRef = collection(db, 'ListedItems');
 
@@ -34,16 +36,20 @@ export default function Item() {
   return (
     <div className=' text-center h-screen overflow-scroll'>
       <Header />
-      <FilteringItems items={listedItems} name={params.itemId} />
+      <FilteringItems
+        items={listedItems}
+        name={params.itemId}
+        currentUser={currentUser}
+      />
     </div>
   );
 }
 
-const FilteringItems = ({ items, name }) => {
+const FilteringItems = ({ items, name, currentUser }) => {
   const navigate = useNavigate();
 
   const handleButtonClick = (itemID, UserID) => {
-    navigate('/chat', { state: { action: `${itemID + '.' + UserID}` } });
+    navigate('/chat', { state: { action: `${itemID + '/' + UserID}` } });
   };
 
   return items
@@ -60,13 +66,23 @@ const FilteringItems = ({ items, name }) => {
         </p>
         <p>Size : {item.Number}</p>
         <p>Price : {item.Price}$</p>
-        <p>Owner : {item.UserID}</p>
-        <button
-          className='border-4 p-1 rounded-xl m-2'
-          onClick={() => handleButtonClick(item.id, item.UserID)}
-        >
-          Send Message
-        </button>
+        <p>Owner : {item.UserID.split('@')[0]}</p>
+        {currentUser && currentUser.email !== item.UserID && (
+          <button
+            className='border-4 p-1 rounded-xl m-2'
+            onClick={() => handleButtonClick(item.id, item.UserID)}
+          >
+            Send Message
+          </button>
+         )}
+         {!currentUser && 
+           <button
+            className='border-4 p-2 rounded-xl m-2'
+            // onClick={}
+          >
+            Sign in to send Message
+          </button>
+         }
       </div>
     ));
 };

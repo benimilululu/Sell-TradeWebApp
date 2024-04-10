@@ -154,14 +154,6 @@ body {
   transition: background-image 3s ease-in-out
 }
 
-/* .nightMode {
-  background: #151d29;
-}
-
-.lightMode {
-  background: #d6e7f7;
-} */
-
 /* absolute position the input element on top of the accompanying svg element */
 label {
   position: relative;

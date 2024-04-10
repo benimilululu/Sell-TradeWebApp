@@ -55,7 +55,7 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className='text-black text-center border-y-4 pt-1 pb-5 animate-fade-in-from-bottom '>
+    <section className=' text-black text-center border-y-4 pt-1 pb-5 animate-fade-in-from-bottom w-screen'>
       <p className='text-3xl font-bold text-white text-center'>Categories</p>
       {showCategories ? (
         <div className='animate-fade-in-from-bottom'>
@@ -82,7 +82,7 @@ export default function Categories() {
         </div>
       ) : (
         <>
-          <div className='h-5/6 flex items-center justify-center pb-44'>
+          <div className='w-screen h-5/6 flex items-center justify-center pb-44'>
             <InfinitySpin
               visible={true}
               size={100}
