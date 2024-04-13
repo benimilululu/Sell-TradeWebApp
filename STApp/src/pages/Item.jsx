@@ -70,7 +70,7 @@ const FilteringItems = ({ items, name, currentUser }) => {
         {currentUser && currentUser.email !== item.UserID && (
           <button
             className='border-4 p-1 rounded-xl m-2'
-            onClick={() => handleButtonClick(item.id, item.UserID)}
+            onClick={() => handleButtonClick(item.uid, item.UserID)}
           >
             Send Message
           </button>

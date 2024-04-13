@@ -36,6 +36,7 @@ export default function Chat() {
     if (action) {
       // Perform your action here
       const userData = action.split('/');
+      console.log(userData[0])
       const user = {
         uid: userData[0],
         email: userData[1],
