@@ -89,12 +89,23 @@ export default function Login() {
             value={password}
           />
 
-          <button
+          {/* <button
             className='border px-4 rounded-2xl  font-bold text-black  my-6 bg-sky-200'
             onClick={register}
           >
             Register
-          </button>
+          </button> */}
+          <a
+            onClick={register}
+           
+            className='group relative inline-block cursor-pointer overflow-hidden rounded border border-gray-100 bg-gray-200  px-8 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white mt-2'
+          >
+            <span className='ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-700 group-hover:w-full'></span>
+            <span className='ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-700 group-hover:h-full'></span>
+            <span className='ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-violet-600 transition-all duration-700 group-hover:w-full'></span>
+            <span className='ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-violet-600 transition-all duration-700 group-hover:h-full'></span>
+            Register
+          </a>
         </div>
       </div>
     );
@@ -103,7 +114,7 @@ export default function Login() {
   const showLogInPage = () => {
     return (
       <div className='w-screen text-center text-2xl text-white mt-20'>
-        <div className='grid justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white '>
+        <div className='grid justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white'>
           <p className='my-4'>Login</p>
           <input
             type='text'
@@ -150,7 +161,7 @@ export default function Login() {
 
   return (
     // <ProtectedRoute>
-    <div className=' h-screen'>
+    <div className='h-screen'>
       <Toaster />
       <Header />
       <div className='w-full mt-10  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold text-white'>
@@ -170,9 +181,9 @@ export default function Login() {
         >
           Register
         </p>
-      </div>
       {loginPage && showLogInPage()}
       {!loginPage && showRegisterPage()}
+      </div>
     </div>
     // </ProtectedRoute>
   );

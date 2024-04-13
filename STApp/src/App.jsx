@@ -87,9 +87,9 @@ function App() {
 
   return (
     <div
-      className={`h-screen ${
-        overflowScroll ? 'overflow-scroll' : 'overflow-hidden'
-      } w-fit`}
+      className={`h-screen w-screen overflow-x-scroll${
+        overflowScroll ? 'overflow-y-scroll' : 'overflow-hidden'
+      }`}
     >
       <Toaster />
       {showLoader ? (

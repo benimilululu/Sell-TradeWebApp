@@ -35,6 +35,8 @@ export default function Header({
 
   const searchResultsRef = useRef(null);
 
+  const hamburgerMenuRef = useRef(null);
+
   const isHomePage = location.pathname === '/';
 
   const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
@@ -58,10 +60,10 @@ export default function Header({
 
   useEffect(() => {
     // !Hiding Search Result div if we click outside that div ->
-    function handleClickOutside() {
+    function handleClickOutside(e) {
       if (
         searchResultsRef.current &&
-        !searchResultsRef.current.contains(event.target)
+        !searchResultsRef.current.contains(e.target)
       ) {
         setSearchBarValue('');
         setSearchResultsIsOpen(false);
@@ -69,6 +71,7 @@ export default function Header({
     }
     // Bind the event listener
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside);
@@ -89,7 +92,7 @@ export default function Header({
   return (
     <div>
       <Toaster />
-      <div className='text-3xl p-4 text-white grid grid-cols-2'>
+      <div className='text-3xl p-4 md:ml-3 text-white grid grid-cols-2 md:text-4xl'>
         <Fade top duration={1500}>
           <p className='w-fit font-extrabold'>
             <Link
@@ -129,6 +132,7 @@ export default function Header({
               scrollToCategories={scrollToCategories}
               scrollHandler={scrollHandler}
               scrollToAboutUs={scrollToAboutUs}
+              hamburgerMenuRef={hamburgerMenuRef}
             />
           )}
         </div>
@@ -149,7 +153,7 @@ export default function Header({
         <div></div>
         {searchResultIsOpen && (
           <div
-            className='fixed inset-y-28 left-28 border-2 w-4/6 h-96 rounded-3xl backdrop-blur-xl overflow-scroll bg-gradient-to-b from-cyan-700 via-cyan-900 to-gray-900'
+            className='absolute mt-2 inset-y-28 left-28 border-2 w-4/6 h-96 rounded-3xl backdrop-blur-xl overflow-auto md:w-2/6 md:h-4/6 overflow-x-hidden'
             ref={searchResultsRef}
           >
             <FilteringItems
@@ -178,15 +182,17 @@ export default function Header({
 //  Search bar result ->
 // Filtering Listed Items ->
 const FilteringItems = ({ items, searchBarValue }) => {
-  return items
-    ?.filter((item) =>
-      item.Name.toLowerCase().includes(searchBarValue.toLowerCase())
-    )
-    .map((item) => (
+  const filteredItems = items?.filter((item) =>
+    item.Name.toLowerCase().includes(searchBarValue.toLowerCase())
+  );
+  console.log(filteredItems);
+
+  if (filteredItems.length) {
+    return filteredItems.map((item) => (
       <Link key={item.id} to={`/listed-item/${item.Name}`}>
         <div
           key={item.id}
-          className='border-2 p-4 rounded-2xl m-4 overflow-scroll text-center'
+          className='border-2 p-4 rounded-2xl m-4 text-center '
         >
           <img className='rounded-xl' src={item.ImageUrl} />
           <p>
@@ -198,6 +204,33 @@ const FilteringItems = ({ items, searchBarValue }) => {
         </div>
       </Link>
     ));
+  } else {
+    return (
+      <div className='flex justify-center items-center h-full'>
+        <p className='font-bold'>No Items Found ...</p>
+      </div>
+    );
+  }
+  // return items
+  //   ?.filter((item) =>
+  //     item.Name.toLowerCase().includes(searchBarValue.toLowerCase())
+  //   )
+  //   .map((item) => (
+  //     <Link key={item.id} to={`/listed-item/${item.Name}`}>
+  //       <div
+  //         key={item.id}
+  //         className='border-2 p-4 rounded-2xl m-4 text-center '
+  //       >
+  //         <img className='rounded-xl' src={item.ImageUrl} />
+  //         <p>
+  //           Name: {item.Company} {item.Name}
+  //         </p>
+  //         <p>Size : {item.Number}</p>
+  //         <p>Price : {item.Price}$</p>
+  //         <p>{item.UserID}</p>
+  //       </div>
+  //     </Link>
+  //   ));
 };
 
 const MenuButton = ({
@@ -249,6 +282,24 @@ const HamburgerMenu = ({
   scrollToAboutUs,
 }) => {
   const nav = useNavigate();
+  const hamburgerMenuRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside2(e) {
+      if (
+        hamburgerMenuRef.current &&
+        !hamburgerMenuRef.current.contains(e.target)
+      ) {
+        isOpen(!isOpenDiv);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside2);
+
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside2);
+    };
+  }, []);
 
   const logOut = async () => {
     try {
@@ -278,28 +329,38 @@ const HamburgerMenu = ({
 
   return (
     <div
-      className={`fixed animate-slide-down  mt-12 grid text-center w-11/12 border rounded-xl  drop-shadow-2xl backdrop-blur-3xl `}
+      className={`absolute md:duration-300 animate-slide-down  mt-12 grid text-center w-11/12 md:w-2/6  mx-auto border rounded-xl  drop-shadow-2xl backdrop-blur-3xl`}
+      ref={hamburgerMenuRef}
     >
       {e ? (
-        <Link className=' border rounded-lg m-4 p-2' to='/profile'>
+        <Link
+          className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
+          to='/profile'
+        >
           My Profile
         </Link>
       ) : (
-        <Link className='border rounded-lg m-4 p-2' to='/login'>
+        <Link
+          className='border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
+          to='/login'
+        >
           Login
         </Link>
       )}
       <Link
-        className='border rounded-lg m-4 p-2'
+        className='border rounded-lg m-4 p-2 md:hover:bg-teal-600 md:duration-300'
         to={'/list-item'}
       >
         List Item
       </Link>
-      <Link className='border rounded-lg m-4 p-2' to='/how-it-works'>
+      <Link
+        className='border rounded-lg m-4 p-2 md:hover:bg-teal-600 md:duration-300'
+        to='/how-it-works'
+      >
         How it Works ?
       </Link>
       <Link
-        className='border rounded-lg m-4 p-2'
+        className='border rounded-lg m-4 p-2 md:hover:bg-teal-600 md:duration-300'
         to={'/'}
         state={{ action: 'categories' }}
         onClick={() => handleButtonClick('categories')}
@@ -307,7 +368,7 @@ const HamburgerMenu = ({
         <p>Categories</p>
       </Link>
       <Link
-        className='border rounded-lg m-4 p-2'
+        className='border rounded-lg m-4 p-2 md:hover:bg-teal-600 md:duration-300'
         to={'/'}
         state={{ action: 'about' }}
         onClick={() => handleButtonClick('about')}

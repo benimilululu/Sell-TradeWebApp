@@ -42,7 +42,7 @@ export default function AboutUs() {
   }
 
   return (
-    <div className='text-center text-white text-3xl pb-10 mt-10'>
+    <div className='text-center text-white text-3xl pb-10 mt-10 w-screen'>
       <p className='font-bold'>About TopFind</p>
       <AboutMeText />
     </div>

@@ -103,7 +103,7 @@ export default function Chat() {
                   className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white overflow-hidden'
                   onClick={() => {
                     selectHandler(chat[1].userInfo);
-                    console.log(chat[1].userInfo);
+                    console.log(chat[0]);
                     setUserName('');
                   }}
                 >

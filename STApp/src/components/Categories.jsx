@@ -55,24 +55,26 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className=' text-black text-center border-y-4 pt-1 pb-5 animate-fade-in-from-bottom w-screen'>
-      <p className='text-3xl font-bold text-white text-center'>Categories</p>
+    <section className=' text-black text-center border-y-4 pt-1 pb-5 animate-fade-in-from-bottom'>
+      <p className='text-3xl font-bold text-white text-center md:text-4xl'>
+        Categories
+      </p>
       {showCategories ? (
-        <div className='animate-fade-in-from-bottom'>
-          <p className='mt-2 text-2xl text-white font-bold text-start ml-4'>
+        <div className='animate-fade-in-from-bottom md:m-2'>
+          <p className='mt-2 text-2xl text-white font-bold text-start ml-4 md:text-4xl'>
             Shoes
           </p>
-          <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
+          <div className='grid grid-cols-2 mt-2 md:grid-cols-4 md:gap-8 gap-4 text-white mx-4 align-text-bottom'>
             <CategoriesHandler2
               cat={cat1}
               setShowCategories={setShowCategories}
             />
           </div>
           <div>
-            <p className='mt-10 text-2xl text-white font-bold text-start ml-4'>
+            <p className='md:text-4xl mt-10 text-2xl text-white font-bold text-start ml-4'>
               Clothes
             </p>
-            <div className='grid grid-cols-2 gap-4 text-white mx-4 align-text-bottom'>
+            <div className='mt-2 grid grid-cols-2 md:grid-cols-4 md:gap-8 gap-4 text-white mx-4 align-text-bottom'>
               <CategoriesHandler2
                 cat={cat2}
                 setShowCategories={setShowCategories}
@@ -107,7 +109,7 @@ const CategoriesHandler2 = ({ cat, setShowCategories }) => {
   return cat.map((obj, index) => (
     <Link to={`/categories/${obj.cat}`}>
       <div
-        className='border-4 rounded-2xl h-48  align-text-bottom mb-5'
+        className='border-4 md:border-teal-600 duration-200  md:hover:border-4 md:hover:border-white rounded-2xl h-48  align-text-bottom mb-5'
         key={index + 1}
       >
         <img
@@ -115,7 +117,7 @@ const CategoriesHandler2 = ({ cat, setShowCategories }) => {
           onLoad={() => setShowCategories(true)}
           src={obj.img}
         />
-        <p className='text-xl mt-1'>{obj.cat}</p>
+        <p className='text-xl mt-1 md:text-2xl md:font-bold'>{obj.cat}</p>
       </div>
     </Link>
   ));

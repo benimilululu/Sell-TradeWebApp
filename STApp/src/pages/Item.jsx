@@ -76,12 +76,14 @@ const FilteringItems = ({ items, name, currentUser }) => {
           </button>
          )}
          {!currentUser && 
+         <Link to='/login'>
            <button
             className='border-4 p-2 rounded-xl m-2'
             // onClick={}
           >
             Sign in to send Message
           </button>
+         </Link>
          }
       </div>
     ));
