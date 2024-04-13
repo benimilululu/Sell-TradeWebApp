@@ -53,7 +53,7 @@ const FilteringItems = ({ items, name, currentUser }) => {
   };
 
   return items
-    ?.filter((item) => item.Name.toLowerCase().includes(name.toLowerCase()))
+    ?.filter((item) => item.id.includes(name))
     .map((item) => (
       <div
         key={item.id}

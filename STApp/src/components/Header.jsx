@@ -189,7 +189,7 @@ const FilteringItems = ({ items, searchBarValue }) => {
 
   if (filteredItems.length) {
     return filteredItems.map((item) => (
-      <Link key={item.id} to={`/listed-item/${item.Name}`}>
+      <Link key={item.id} to={`/listed-item/${item.id}`}>
         <div
           key={item.id}
           className='border-2 p-4 rounded-2xl m-4 text-center '
