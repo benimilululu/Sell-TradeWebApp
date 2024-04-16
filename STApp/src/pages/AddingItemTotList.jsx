@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { auth, db, imgDB } from '../config/firebase';
 import { getDocs, collection, addDoc } from 'firebase/firestore';
 import { v4 } from 'uuid';
@@ -9,6 +9,9 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useLocation } from 'react-router-dom';
+
+import { AuthContext } from '../context/AuthContext';
+
 
 // import { Dropdown } from 'primereact/dropdown';
 
@@ -22,6 +25,10 @@ export default function AddingItemTotList() {
   const [img, setImg] = useState('');
   const [category, setCategory] = useState('');
   const [dropdown, setDropdown] = useState(false);
+
+  const [image, setImage] = useState('')
+
+  const { currentUser } = useContext(AuthContext);
 
   const nav = useNavigate();
 
@@ -43,7 +50,7 @@ export default function AddingItemTotList() {
   // !Adding data to Cloud Firestore ->
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    
+
     if (img && category) {
       try {
         await addDoc(listedItemsCollectionRef, {
@@ -69,9 +76,10 @@ export default function AddingItemTotList() {
 
   // !Uploading img to the Firestore Storage first ->
   // !Then we save img link and then we can add in Cloud Firestore ->
-  const imageUploadHandler = (e) => {
+  const imageUploadHandler = async (e) => {
     console.log(e.target.files[0]);
     const imgs = ref(imgDB, `imgs/${v4()}`);
+
     uploadBytes(imgs, e.target.files[0]).then((data) => {
       console.log(data, 'imgs');
       getDownloadURL(data.ref).then((val) => {
@@ -93,11 +101,11 @@ export default function AddingItemTotList() {
     <div className='h-screen w-screen justify-items-center '>
       <Toaster />
       <Header />
-      <div className='md:flex justify-center items-start'>
+      {currentUser && <div className='md:flex justify-center items-start'>
         <div className='grid justify-items-center text-xl border-4 p-5 rounded-lg mx-6 mt-5 animate-fade-in-from-bottom md:w-4/6 h-5/6'>
           <p className='font-bold text-white text-3xl '>LIST ITEM</p>
 
-          <form className='grid w-5/6 ' onSubmit={onSubmitHandler}>
+          <form className='grid w-5/6 ' onSubmit={e => onSubmitHandler(e)}>
             <div className='md:grid md:grid-cols-2 md:gap-20'>
               <div>
                 <div className='mt-2'>
@@ -313,12 +321,14 @@ export default function AddingItemTotList() {
             <button
               className='border m-4 rounded-md p-2 bg-sky-200 text-black  font-bold'
               type='submit'
+              // onClick={(e) => onSubmitHandler(e)}
             >
               List Item
             </button>
           </form>
         </div>
-      </div>
+      </div>}
+      
     </div>
   );
 }

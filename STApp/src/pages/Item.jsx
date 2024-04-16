@@ -34,13 +34,16 @@ export default function Item() {
   }, []);
 
   return (
-    <div className=' text-center h-screen overflow-scroll'>
+    <div className=' w-screen text-center h-screen overflow-scroll'>
       <Header />
-      <FilteringItems
+      <div className='md:w-3/6 md:m-auto'>
+        <FilteringItems
         items={listedItems}
         name={params.itemId}
         currentUser={currentUser}
       />
+      </div>
+      
     </div>
   );
 }
@@ -60,7 +63,7 @@ const FilteringItems = ({ items, name, currentUser }) => {
         className='border-4 p-4 rounded-2xl
            m-5 text-center text-xl text-white'
       >
-        <img className='rounded-xl' src={item.ImageUrl} />
+        <img className='rounded-xl  md:m-auto' src={item.ImageUrl} />
         <p className='mt-5'>
           Name: {item.Company} {item.Name}
         </p>

@@ -71,7 +71,7 @@ export default function Login() {
 
   const showRegisterPage = () => {
     return (
-      <div className='w-screen text-center text-2xl text-white mt-20'>
+      <div className='w-screen md:w-full text-center text-2xl text-white mt-20'>
         <div className='grid text-2xl border-4 rounded-lg mx-10 p-4 mt-10 justify-items-center text-white'>
           <p className='my-4'>Register</p>
           <input
@@ -88,16 +88,8 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-
-          {/* <button
-            className='border px-4 rounded-2xl  font-bold text-black  my-6 bg-sky-200'
-            onClick={register}
-          >
-            Register
-          </button> */}
           <a
             onClick={register}
-           
             className='group relative inline-block cursor-pointer overflow-hidden rounded border border-gray-100 bg-gray-200  px-8 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white mt-2'
           >
             <span className='ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-700 group-hover:w-full'></span>
@@ -113,7 +105,7 @@ export default function Login() {
 
   const showLogInPage = () => {
     return (
-      <div className='w-screen text-center text-2xl text-white mt-20'>
+      <div className='w-screen md:w-full text-center text-2xl text-white mt-20'>
         <div className='grid justify-items-center text-2xl border-4 rounded-lg mx-10 p-4 mt-10 text-white'>
           <p className='my-4'>Login</p>
           <input
@@ -161,30 +153,35 @@ export default function Login() {
 
   return (
     // <ProtectedRoute>
-    <div className='h-screen'>
-      <Toaster />
-      <Header />
-      <div className='w-full mt-10  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold text-white'>
-        <p
-          className={`p-1 duration-300 mx-3 ${
-            loginPage ? 'bg-sky-200 rounded-full text-black' : ''
-          }`}
-          onClick={() => setLoginPage(true)}
-        >
-          Login
-        </p>
-        <p
-          className={`p-1 duration-300 mx-3 ${
-            !loginPage ? 'bg-sky-200 rounded-full text-black' : ''
-          }`}
-          onClick={() => setLoginPage(false)}
-        >
-          Register
-        </p>
-      {loginPage && showLogInPage()}
-      {!loginPage && showRegisterPage()}
+      <div className='h-screen w-screen'>
+        <Toaster />
+        <Header />
+        {!currentUser ? <div>
+          <div className='mt-10 md:w-3/6 md:m-auto  grid grid-cols-2 text-center  gap-2 text-xl items-center font-bold text-white'>
+          <p
+            className={`p-1 duration-300 mx-3 ${
+              loginPage ? 'bg-sky-200 rounded-full text-black' : ''
+            }`}
+            onClick={() => setLoginPage(true)}
+          >
+            Login
+          </p>
+          <p
+            className={`p-1 duration-300 mx-3 ${
+              !loginPage ? 'bg-sky-200 rounded-full text-black' : ''
+            }`}
+            onClick={() => setLoginPage(false)}
+          >
+            Register
+          </p>
+        </div>
+        <div className='md:w-3/6 md:m-auto'>
+          {loginPage && showLogInPage()}
+          {!loginPage && showRegisterPage()}
+        </div>
+          </div> : ''}
+        
       </div>
-    </div>
     // </ProtectedRoute>
   );
 }

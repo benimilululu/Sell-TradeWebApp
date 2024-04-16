@@ -133,6 +133,7 @@ export default function Header({
               scrollHandler={scrollHandler}
               scrollToAboutUs={scrollToAboutUs}
               hamburgerMenuRef={hamburgerMenuRef}
+              isHomePage={isHomePage}
             />
           )}
         </div>
@@ -211,26 +212,6 @@ const FilteringItems = ({ items, searchBarValue }) => {
       </div>
     );
   }
-  // return items
-  //   ?.filter((item) =>
-  //     item.Name.toLowerCase().includes(searchBarValue.toLowerCase())
-  //   )
-  //   .map((item) => (
-  //     <Link key={item.id} to={`/listed-item/${item.Name}`}>
-  //       <div
-  //         key={item.id}
-  //         className='border-2 p-4 rounded-2xl m-4 text-center '
-  //       >
-  //         <img className='rounded-xl' src={item.ImageUrl} />
-  //         <p>
-  //           Name: {item.Company} {item.Name}
-  //         </p>
-  //         <p>Size : {item.Number}</p>
-  //         <p>Price : {item.Price}$</p>
-  //         <p>{item.UserID}</p>
-  //       </div>
-  //     </Link>
-  //   ));
 };
 
 const MenuButton = ({
@@ -280,6 +261,7 @@ const HamburgerMenu = ({
   scrollToCategories,
   scrollHandler,
   scrollToAboutUs,
+  isHomePage
 }) => {
   const nav = useNavigate();
   const hamburgerMenuRef = useRef(null)
@@ -329,9 +311,17 @@ const HamburgerMenu = ({
 
   return (
     <div
-      className={`absolute md:duration-300 animate-slide-down  mt-12 grid text-center w-11/12 md:w-2/6  mx-auto border rounded-xl  drop-shadow-2xl backdrop-blur-3xl`}
-      ref={hamburgerMenuRef}
+      className={`absolute md:duration-300 animate-slide-down  mt-12 grid text-center w-11/12 md:w-3/12  mx-auto border-4 rounded-xl  drop-shadow-2xl backdrop-blur-3xl md:text-2xl`}
+      // ref={hamburgerMenuRef}
     >
+      {!isHomePage && (
+        <Link
+          className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
+          to='/'
+        >
+          Home Page
+        </Link>
+      )}
       {e ? (
         <Link
           className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
@@ -377,7 +367,7 @@ const HamburgerMenu = ({
       </Link>
       {e && (
         <button
-          className='border rounded-lg m-4 p-2'
+          className='border rounded-lg m-4 p-2  md:hover:bg-teal-600 md:duration-300'
           onClick={() => {
             isOpen(false);
             logOut();

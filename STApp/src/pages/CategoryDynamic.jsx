@@ -48,34 +48,36 @@ export default function CategoryDynamic() {
   }, []);
 
   return (
-    <div className='text-center w-screen  h-screen text-white overflow-scroll'>
+    <div className='text-center w-screen  h-screen text-white overflow-y-scroll'>
       <Header />
-      <div className='animate-fade-in-from-bottom'>
+      <div className='animate-fade-in-from-bottom '>
         <p className='mt-5 text-2xl font-bold text-white'>
           {params.cat.toUpperCase()}
         </p>
-        {showItems === false && (
-          <p className='mt-20 text-white font-bold text-2xl'>
-             Sorry there are no items in this Category . . .
-          </p>
-        )}
-        {showItems === '' && (
-          <p>
-            <div className='h-5/6 flex items-center justify-center'>
-              <InfinitySpin
-                visible={true}
-                size={100}
-                color='white'
-                ariaLabel='infinity-spin-loading'
-              />
-            </div>
-          </p>
-        )}
-        <FilteringItems
-          items={listedItems}
-          params={params.cat}
-          showItems={setShowItems}
-        />
+        <div className='md:grid md:grid-cols-4 md:gap-5 md:m-4'>
+          {showItems === false && (
+            <p className='mt-20 text-white font-bold text-2xl'>
+              Sorry there are no items in this Category . . .
+            </p>
+          )}
+          {showItems === '' && (
+            <p>
+              <div className='h-5/6 flex items-center justify-center '>
+                <InfinitySpin
+                  visible={true}
+                  size={100}
+                  color='white'
+                  ariaLabel='infinity-spin-loading'
+                />
+              </div>
+            </p>
+          )}
+          <FilteringItems
+            items={listedItems}
+            params={params.cat}
+            showItems={setShowItems}
+          />
+        </div>
       </div>
     </div>
   );
@@ -91,37 +93,37 @@ const FilteringItems = ({ items, params, showItems }) => {
     if (filteredItems.length) {
       showItems(true);
       return filteredItems.map((item) => (
-        <Link key={item.id} to={`/listed-item/${item.Name}`}>
+        <Link key={item.id} to={`/listed-item/${item.id}`}>
           <div
-          key={item.id}
-          className='border-4 p-4 rounded-2xl
-           mx-5 text-center text-xl  my-4'
-           
-        >
-          {showLoader && (
-            <div className='h-5/6 flex items-center justify-center'>
-              <InfinitySpin
-                visible={true}
-                size={100}
-                color='white'
-                ariaLabel='infinity-spin-loading'
-              />
+            key={item.id}
+            className='flex justify-between border-4 p-4 rounded-2xl
+           mx-5 md:mx-0 text-center text-xl  my-4 h-full flex-col md:hover:scale-105  md:duration-300 '
+          >
+            {showLoader && (
+              <div className='h-5/6 flex items-center'>
+                <InfinitySpin
+                  visible={true}
+                  size={100}
+                  color='white'
+                  ariaLabel='infinity-spin-loading'
+                />
+              </div>
+            )}
+            <img
+              className='rounded-xl'
+              src={item.ImageUrl}
+              onLoad={() => setShowLoader(false)}
+            />
+            <div className=''>
+              <p className='mt-5 '>
+                Name: {item.Company} {item.Name}
+              </p>
+              <p>Size : {item.Number}</p>
+              <p>Price : {item.Price}$</p>
+              <p>Owner : {item.UserID.split('@')[0]}</p>
             </div>
-          )}
-          <img
-            className='rounded-xl'
-            src={item.ImageUrl}
-            onLoad={() => setShowLoader(false)}
-          />
-          <p className='mt-5'>
-            Name: {item.Company} {item.Name}
-          </p>
-          <p>Size : {item.Number}</p>
-          <p>Price : {item.Price}$</p>
-          <p>Owner : {item.UserID.split('@')[0]}</p>
-        </div>
+          </div>
         </Link>
-        
       ));
     } else {
       showItems(false)

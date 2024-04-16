@@ -1,11 +1,12 @@
 import React from 'react';
 
-export default function Night_LightModeButton({nightMode, setNightMode}) {
+export default function Night_LightModeButton({ nightMode, setNightMode }) {
   return (
     <div>
-      <div className='flex '>
-        <label for='toggle ' className=' mt-1'>
+      <div classNameName='flex relative'>
+        <label htmlFor='toggle ' classNameName=' mt-1'>
           <input
+            className='w-full'
             type='checkbox'
             checked={!nightMode && 'checked'}
             onClick={() => setNightMode(!nightMode)}
@@ -30,8 +31,8 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
               {/* <!-- for the light variant --> */}
               {/* <!-- gradient used for the background --> */}
               <linearGradient id='gradient-light' x1='0' x2='0' y1='0' y2='1'>
-                <stop stop-color='#8bc8f2' offset='0'></stop>
-                <stop stop-color='#fff' offset='1'></stop>
+                <stop stopColor='#8bc8f2' offset='0'></stop>
+                <stop stopColor='#fff' offset='1'></stop>
               </linearGradient>
               ;
               {/* <!-- filter applied to (a copy of) the sun to blur the edges --> */}
@@ -53,15 +54,15 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
               ;{/* <!-- for the dark variant --> */}
               {/* <!-- gradient used for the background --> */}
               <linearGradient id='gradient-dark' x1='0' x2='0' y1='0' y2='1'>
-                <stop stop-color='#1F2241' offset='0'></stop>
-                <stop stop-color='#7D59DF' offset='1'></stop>
+                <stop stopColor='#1F2241' offset='0'></stop>
+                <stop stopColor='#7D59DF' offset='1'></stop>
               </linearGradient>
               ;{/* <!-- gradient used for the the mask */}
               {/* the idea is to have the mask use the [#000-#fff] gradient to progressively hide the shapes as they approach the bottom */}
               {/* --> */}
               <linearGradient id='gradient-mask' x1='0' x2='0' y1='0' y2='1'>
-                <stop stop-color='#000' offset='0'></stop>
-                <stop stop-color='#fff' offset='1'></stop>
+                <stop stopColor='#000' offset='0'></stop>
+                <stop stopColor='#fff' offset='1'></stop>
               </linearGradient>
               {/* <!-- mask to conceal the stars at the bottom of the toggle --> */}
               <mask id='mask-dark'>
@@ -69,12 +70,12 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
               </mask>
               {/* <!-- gradients for the moon and craters --> */}
               <radialGradient id='gradient-moon'>
-                <stop stop-color='#fdfdfd' offset='0.7'></stop>
-                <stop stop-color='#e2e2e2' offset='1'></stop>
+                <stop stopColor='#fdfdfd' offset='0.7'></stop>
+                <stop stopColor='#e2e2e2' offset='1'></stop>
               </radialGradient>
               <radialGradient id='gradient-crater'>
-                <stop stop-color='#e0e0e0' offset='0'></stop>
-                <stop stop-color='#d9d9d9' offset='1'></stop>
+                <stop stopColor='#e0e0e0' offset='0'></stop>
+                <stop stopColor='#d9d9d9' offset='1'></stop>
               </radialGradient>
               {/* <!-- pattern for the stars --> */}
               <pattern
@@ -104,14 +105,14 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
         ! beside changing the opacity of the .light elements the transition also affects the position of the sun/moon and of the patterns
     --> */}
             <g transform='translate(5 2.5)'>
-              <g clip-path='url(#clip)'>
-                <g class='dark'>
+              <g clipPath='url(#clip)'>
+                <g className='dark'>
                   <use fill='url(#gradient-dark)' href='#background'></use>
                   {/* translate the stars above the toggle
                 ! the change in y scale allows to transition the stars with a faster pace (see the CSS) */}
 
                   <g
-                    class='background'
+                    className='background'
                     transform='translate(0 -40) scale(1 0.4)'
                   >
                     <rect
@@ -129,12 +130,12 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
                     href='#background'
                   ></use>
                 </g>
-                <g class='light'>
+                <g className='light'>
                   <use fill='url(#gradient-light)' href='#background'></use>
                   {/* <!-- translate the waves above the toggle and reset their position with an opposite translation
                 by translating the first group to 0 (alongside the stars) the waves are pushed below
                 --> */}
-                  <g class='background' transform='translate(-30 -20)'>
+                  <g className='background' transform='translate(-30 -20)'>
                     <g transform='translate(30 20)'>
                       <rect
                         fill='url(#pattern-light)'
@@ -151,10 +152,10 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
 
             <g transform='translate(77.5 22.5)'>
               {/* <!-- translate this group to move the sun/moon to the right --> */}
-              <g class='translate' transform='translate(-55)'>
+              <g className='translate' transform='translate(-55)'>
                 {/* <!-- rotate this group to rotate the moon --> */}
-                <g class='rotate' transform='rotate(-100)'>
-                  <g class='dark'>
+                <g className='rotate' transform='rotate(-100)'>
+                  <g className='dark'>
                     <circle
                       fill='url(#gradient-moon)'
                       cx='0'
@@ -166,7 +167,7 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
                         transform='rotate(-30)'
                         fill='url(#gradient-crater)'
                         stroke='#d5d5d5'
-                        stroke-width='0.2'
+                        strokeWidth='0.2'
                         cx='0'
                         cy='0'
                         rx='4'
@@ -177,7 +178,7 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
                       <ellipse
                         fill='url(#gradient-crater)'
                         stroke='#d5d5d5'
-                        stroke-width='0.2'
+                        strokeWidth='0.2'
                         cx='0'
                         cy='0'
                         rx='3.85'
@@ -189,7 +190,7 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
                         transform='rotate(-10)'
                         fill='url(#gradient-crater)'
                         stroke='#d5d5d5'
-                        stroke-width='0.2'
+                        strokeWidth='0.2'
                         cx='0'
                         cy='0'
                         rx='2'
@@ -198,7 +199,7 @@ export default function Night_LightModeButton({nightMode, setNightMode}) {
                     </g>
                   </g>
                 </g>
-                <g class='light'>
+                <g className='light'>
                   <circle
                     fill='#FFD21F'
                     cx='0'

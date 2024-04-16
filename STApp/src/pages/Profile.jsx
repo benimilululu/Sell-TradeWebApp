@@ -26,7 +26,9 @@ export default function Profile() {
       </div>
       <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white overflow-scroll animate-fade-in-from-bottom'>
         <p>My Listing's</p>
-        <GetFilteredItems user={currentUser.email} />
+        <div className='md:grid md:grid-cols-3 md:gap-5'>
+          <GetFilteredItems user={currentUser.email} />
+        </div>
       </div>
     </div>
   );
@@ -60,19 +62,21 @@ const GetFilteredItems = ({ user }) => {
 
   if (filteredItems.length) {
     return filteredItems.map((item) => (
-      <div
-        key={item.id}
-        className='border p-4 rounded-2xl
-           mx-5 text-center text-xl text-black my-4'
-      >
-        <img className='rounded-xl' src={item.ImageUrl} />
-        <p className='mt-5'>
-          Name: {item.Company} {item.Name}
-        </p>
-        <p>Size : {item.Number}</p>
-        <p>Price : {item.Price}$</p>
-        <p>Owner : {item.UserID}</p>
-      </div>
+      <Link to={`/listed-item/${item.id}`}>
+        <div
+          key={item.id}
+          className='border-2 p-4 rounded-2xl
+           mx-5 text-center text-xl  my-4 md:h-full md:p-3 md:flex md:justify-between md:flex-col md:hover:scale-105  md:duration-300 md:mt-10'
+        >
+          <img className='rounded-xl' src={item.ImageUrl} />
+          <p className='mt-5'>
+            Name: {item.Company} {item.Name}
+          </p>
+          <p>Size : {item.Number}</p>
+          <p>Price : {item.Price}$</p>
+          <p>Owner : {item.UserID}</p>
+        </div>
+      </Link>
     ));
   } else {
     return (
@@ -80,7 +84,9 @@ const GetFilteredItems = ({ user }) => {
         <p className='mt-20 text-white font-bold text-2xl'>
           You have no listing's yet . . .
           <Link to={'/list-item'}>
-            <button className='mt-4 border-2 rounded-xl p-2'>Start listing Item's</button>
+            <button className='mt-4 border-2 rounded-xl p-2'>
+              Start listing Item's
+            </button>
           </Link>
         </p>
       </div>
