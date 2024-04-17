@@ -101,7 +101,7 @@ export default function Chat() {
               .map((chat) => (
                 <div
                   key={chat[0]}
-                  className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white md:hover:scale-105  md:duration-300 z-0  md:hover:bg-teal-600'
+                  className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white md:hover:scale-105  md:duration-300 z-0  md:hover:bg-teal-600 cursor-pointer'
                   onClick={() => {
                     selectHandler(chat[1].userInfo);
                     console.log(chat[0]);
