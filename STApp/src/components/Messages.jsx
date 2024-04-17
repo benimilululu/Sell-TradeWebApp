@@ -84,13 +84,13 @@ export default function Messages() {
   };
 
   return (
-    <div className=' mx-3 h-full'>
+    <div className=' mx-3 h-full overflow-hidden'>
       {data.user?.email && (
         <div className='h-full'>
-          <p className='text-center inset-x-1 mt-1 text-2xl pb-1'>
+          <p className='text-center inset-x-1 mt-4 text-2xl'>
             {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-5/6 relative overflow-scroll mt-2'>
+          <div className='h-5/6 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>
@@ -139,7 +139,7 @@ const MessagesData = () => {
   //   console.log(messages);
 
   return (
-    <div className='h-full my-5 overflow-scroll'>
+    <div className='h-full my-5 '>
       {messages &&
         messages?.map((m) => (
           <div
@@ -149,7 +149,7 @@ const MessagesData = () => {
           >
             <div
               className={` border w-fit p-2 m-2 rounded-full ${
-                m.senderId === currentUser.uid && 'bg-black float-right'
+                m.senderId === currentUser.uid && 'bg-teal-600 float-right'
               }`}
             >
               {m.text}

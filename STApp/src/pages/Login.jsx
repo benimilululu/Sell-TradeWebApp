@@ -88,16 +88,12 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <a
+          <button
             onClick={register}
-            className='group relative inline-block cursor-pointer overflow-hidden rounded border border-gray-100 bg-gray-200  px-8 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white mt-2'
+            className='border-2 rounded-lg px-4 p-1 mt-2 md:hover:scale-105  md:duration-300 md:hover:bg-teal-600'
           >
-            <span className='ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-700 group-hover:w-full'></span>
-            <span className='ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-700 group-hover:h-full'></span>
-            <span className='ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-violet-600 transition-all duration-700 group-hover:w-full'></span>
-            <span className='ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-violet-600 transition-all duration-700 group-hover:h-full'></span>
             Register
-          </a>
+          </button>
         </div>
       </div>
     );
@@ -131,7 +127,7 @@ export default function Login() {
             </button>
           ) : (
             <button
-              className='border  rounded-2xl  font-bold text-black my-6 bg-sky-200'
+              className='border-2 rounded-lg px-4 p-1 mt-2 md:hover:scale-105  md:duration-300 md:hover:bg-teal-600'
               onClick={logIn}
             >
               Login

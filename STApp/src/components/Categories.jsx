@@ -109,7 +109,7 @@ const CategoriesHandler2 = ({ cat, setShowCategories }) => {
   return cat.map((obj, index) => (
     <Link to={`/categories/${obj.cat}`}>
       <div
-        className='border-4 md:border-teal-600 duration-200  md:hover:border-4 md:hover:border-white rounded-2xl h-48  align-text-bottom mb-5'
+        className='border-4 md:border-teal-600 duration-200  md:hover:border-4 md:hover:border-white rounded-2xl h-48  align-text-bottom mb-5 md:hover:scale-105  md:duration-300 md:z-0'
         key={index + 1}
       >
         <img

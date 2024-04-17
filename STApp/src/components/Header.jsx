@@ -90,7 +90,7 @@ export default function Header({
   };
 
   return (
-    <div>
+    <div className=''>
       <Toaster />
       <div className='text-3xl p-4 md:ml-3 text-white grid grid-cols-2 md:text-4xl'>
         <Fade top duration={1500}>
@@ -111,10 +111,12 @@ export default function Header({
 
         <div className='flex justify-end'>
           <Fade top duration={1500}>
-            <Night_LightModeButton
-              nightMode={nightMode}
-              setNightMode={setNightMode}
-            />
+            <div className='m-1  rounded-full'>
+              <Night_LightModeButton
+                nightMode={nightMode}
+                setNightMode={setNightMode}
+              />
+            </div>
             <MenuButton
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -138,12 +140,12 @@ export default function Header({
           )}
         </div>
         {isHomePage && (
-          <div className='col-span-2 flex mt-4'>
+          <div className='col-span-2 md:col-span-1 flex mt-4'>
             <p className='text-2xl'>Search</p>
             <input
               type='text'
               value={searchBarValue}
-              className=' ml-4 text-black rounded-lg w-full'
+              className=' ml-4 text-black rounded-lg w-full md:w-4/6'
               onChange={(e) => {
                 storingInputValue(e);
               }}
@@ -166,10 +168,10 @@ export default function Header({
         {isHomePage && currentUser && (
           <Fade bottom duration={1500}>
             <div
-              className={`fixed bottom-2 right-2 size-5 border-4 h-28 w-28 object-cover backdrop-blur-xl rounded-full`}
+              className={`fixed bottom-2 right-2 size-5 border-4 h-28 w-28 object-cover backdrop-blur-xl rounded-full md:z-20`}
             >
               <Link to='/chat'>
-                <FaRocketchat className=' h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
+                <FaRocketchat className='h-16 w-16 m-auto mt-3 drop-shadow-2xl' />
                 <p className='m-auto text-center text-xl font-bold'>Chat</p>
               </Link>
             </div>
@@ -311,7 +313,7 @@ const HamburgerMenu = ({
 
   return (
     <div
-      className={`absolute md:duration-300 animate-slide-down  mt-12 grid text-center w-11/12 md:w-3/12  mx-auto border-4 rounded-xl  drop-shadow-2xl backdrop-blur-3xl md:text-2xl`}
+      className={`absolute md:duration-300 animate-slide-down  mt-12 grid text-center w-11/12 md:w-3/12  mx-auto border-4 rounded-xl  drop-shadow-2xl backdrop-blur-3xl md:text-2xl z-20`}
       // ref={hamburgerMenuRef}
     >
       {!isHomePage && (
@@ -323,12 +325,21 @@ const HamburgerMenu = ({
         </Link>
       )}
       {e ? (
-        <Link
+        <>
+         <Link
           className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
           to='/profile'
         >
           My Profile
         </Link>
+        <Link
+          className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
+          to='/chat'
+        >
+          Chat
+        </Link>
+        </>
+       
       ) : (
         <Link
           className='border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'

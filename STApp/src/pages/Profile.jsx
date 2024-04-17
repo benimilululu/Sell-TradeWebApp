@@ -17,14 +17,14 @@ export default function Profile() {
   // console.log(userEmail)
 
   return (
-    <div className='h-screen w-screen overflow-scroll'>
+    <div className='h-screen w-screen overflow-y-scroll'>
       <Header />
-      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white animate-fade-in-from-bottom'>
+      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white animate-fade-in-from-bottom md:w-3/6 md:m-auto'>
         <p>My Profile</p>
         <p className='mt-4'>Email: {currentUser.email}</p>
         <div className='mt-5'></div>
       </div>
-      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white overflow-scroll animate-fade-in-from-bottom'>
+      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white  animate-fade-in-from-bottom'>
         <p>My Listing's</p>
         <div className='md:grid md:grid-cols-3 md:gap-5'>
           <GetFilteredItems user={currentUser.email} />

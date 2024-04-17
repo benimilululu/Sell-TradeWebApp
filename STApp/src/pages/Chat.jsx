@@ -92,16 +92,16 @@ export default function Chat() {
     };
 
     return (
-      <div className=' h-full'>
+      <div className=' h-full overflow-hidden'>
         {!chatOpen ? (
-          <div className='animate-fade-in-from-bottom'>
+          <div className='animate-fade-in-from-bottom '>
             <p className='mx-2 mt-4 border-b-2'>Messages</p>
             {Object.entries(chat)
               ?.sort((a, b) => b[1].date - a[1].date)
               .map((chat) => (
-                 <div
+                <div
                   key={chat[0]}
-                  className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white overflow-hidden'
+                  className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white md:hover:scale-105  md:duration-300 z-0  md:hover:bg-teal-600'
                   onClick={() => {
                     selectHandler(chat[1].userInfo);
                     console.log(chat[0]);
@@ -132,7 +132,7 @@ export default function Chat() {
               ))}
           </div>
         ) : (
-          <div className=' h-full'>
+          <div className='h-full'>
             {' '}
             <Messages />{' '}
             {/* <button onClick={() => setChatOpen(!chatOpen)}>back</button> */}
@@ -145,8 +145,8 @@ export default function Chat() {
   return (
     <div className='relative h-screen w-screen'>
       <Header />
-      <div className='flex  items-center h-5/6 animate-fade-in-from-bottom'>
-        <div className='h-full overflow-scroll mt-5 border-4 w-5/6 m-auto justify-center items-center rounded-lg '>
+      <div className='flex  items-center h-5/6 animate-fade-in-from-bottom '>
+        <div className={`${!chatOpen ? 'overflow-y-scroll' : ''} h-full  mt-5 border-4 w-5/6 m-auto justify-center items-center rounded-lg`}>
           {chatOpen && (
             <div className='relative' onClick={() => setChatOpen(!chatOpen)}>
               <MdOutlineArrowBackIosNew className='text-white mt-2 ml-2 text-2xl absolute' />
@@ -154,7 +154,7 @@ export default function Chat() {
             </div>
           )}
           {!chatOpen && (
-            <div>
+            <div className=''>
               <p className='text-center text-xl font-bold mt-2 text-white'>
                 TopFindChat
               </p>
@@ -180,7 +180,7 @@ export default function Chat() {
               setChatBarValue={setUserName}
             />
           )}
-          <div className='h-full overflow-scroll  flex flex-col text-white text-xl'>
+          <div className='h-full flex flex-col text-white text-xl'>
             <ChatGenerator />
           </div>
         </div>

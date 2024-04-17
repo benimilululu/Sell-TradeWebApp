@@ -34,9 +34,9 @@ export default function Item() {
   }, []);
 
   return (
-    <div className=' w-screen text-center h-screen overflow-scroll'>
+    <div className=' w-screen text-center h-screen'>
       <Header />
-      <div className='md:w-3/6 md:m-auto'>
+      <div className='md:w-4/6 md:m-auto '>
         <FilteringItems
         items={listedItems}
         name={params.itemId}
@@ -61,33 +61,35 @@ const FilteringItems = ({ items, name, currentUser }) => {
       <div
         key={item.id}
         className='border-4 p-4 rounded-2xl
-           m-5 text-center text-xl text-white'
+           m-5 text-center text-xl text-white md:grid md:grid-cols-2 items-center'
       >
         <img className='rounded-xl  md:m-auto' src={item.ImageUrl} />
-        <p className='mt-5'>
-          Name: {item.Company} {item.Name}
-        </p>
-        <p>Size : {item.Number}</p>
-        <p>Price : {item.Price}$</p>
-        <p>Owner : {item.UserID.split('@')[0]}</p>
-        {currentUser && currentUser.email !== item.UserID && (
-          <button
-            className='border-4 p-1 rounded-xl m-2'
-            onClick={() => handleButtonClick(item.uid, item.UserID)}
-          >
-            Send Message
-          </button>
-         )}
-         {!currentUser && 
-         <Link to='/login'>
-           <button
-            className='border-4 p-2 rounded-xl m-2'
-            // onClick={}
-          >
-            Sign in to send Message
-          </button>
-         </Link>
-         }
+        <div className='md:grid md:gap-4'>
+          <p className='mt-5'>
+            Name: {item.Company} {item.Name}
+          </p>
+          <p>Size : {item.Number}</p>
+          <p>Price : {item.Price}$</p>
+          <p>Owner : {item.UserID.split('@')[0]}</p>
+          {currentUser && currentUser.email !== item.UserID && (
+            <button
+              className='border-4 p-1 rounded-xl m-2 md:w-fit md:m-auto md:p-2 md:hover:scale-105  md:duration-300 md:hover:bg-teal-600'
+              onClick={() => handleButtonClick(item.uid, item.UserID)}
+            >
+              Send Message
+            </button>
+          )}
+          {!currentUser && (
+            <Link to='/login'>
+              <button
+                className='border-4 p-2 rounded-xl m-2 md:w-fit md:m-auto md:p-2 md:hover:scale-105  md:duration-300 md:hover:bg-teal-600'
+                // onClick={}
+              >
+                Sign in to send Message
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     ));
 };

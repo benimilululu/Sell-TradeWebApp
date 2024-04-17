@@ -4,7 +4,7 @@ export default function Night_LightModeButton({ nightMode, setNightMode }) {
   return (
     <div>
       <div classNameName='flex relative'>
-        <label htmlFor='toggle ' classNameName=' mt-1'>
+        <label htmlFor='toggle ' className='mt-2'>
           <input
             className='w-full'
             type='checkbox'
@@ -104,7 +104,7 @@ export default function Night_LightModeButton({ nightMode, setNightMode }) {
         the idea is to include the elements for the light variant on top of the dark counterpart and change the opacity when the input is toggled
         ! beside changing the opacity of the .light elements the transition also affects the position of the sun/moon and of the patterns
     --> */}
-            <g transform='translate(5 2.5)'>
+            <g transform='translate(5 2.5) '>
               <g clipPath='url(#clip)'>
                 <g className='dark'>
                   <use fill='url(#gradient-dark)' href='#background'></use>
@@ -152,7 +152,10 @@ export default function Night_LightModeButton({ nightMode, setNightMode }) {
 
             <g transform='translate(77.5 22.5)'>
               {/* <!-- translate this group to move the sun/moon to the right --> */}
-              <g className='translate' transform='translate(-55)'>
+              <g
+                className='translate'
+                transform='translate(-55)'
+              >
                 {/* <!-- rotate this group to rotate the moon --> */}
                 <g className='rotate' transform='rotate(-100)'>
                   <g className='dark'>
