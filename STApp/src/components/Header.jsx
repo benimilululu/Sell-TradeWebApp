@@ -138,12 +138,12 @@ export default function Header({
           )}
         </div>
         {isHomePage && (
-          <div className='flex mt-4'>
+          <div className='col-span-2 flex mt-4'>
             <p className='text-2xl'>Search</p>
             <input
               type='text'
               value={searchBarValue}
-              className='ml-4 text-black rounded-lg w-fit'
+              className=' ml-4 text-black rounded-lg w-full'
               onChange={(e) => {
                 storingInputValue(e);
               }}
