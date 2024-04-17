@@ -109,9 +109,9 @@ export default function Header({
           </p>
         </Fade>
 
-        <div className='relative justify-end'>
+        <div className='flex justify-end'>
           <Fade top duration={1500}>
-            <div className='m-1  rounded-full'>
+            <div className='m-1  rounded-full' onClick={() => setNightMode(!nightMode)}>
               <Night_LightModeButton
                 nightMode={nightMode}
                 setNightMode={setNightMode}
