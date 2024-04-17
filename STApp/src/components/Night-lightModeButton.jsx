@@ -3,10 +3,10 @@ import React from 'react';
 export default function Night_LightModeButton({ nightMode, setNightMode }) {
   return (
     <div>
-      <div className=' '>
+      <div classNameName='flex relative'>
         <label htmlFor='toggle ' className='mt-2'>
           <input
-            className='w-fit'
+            className='w-full'
             type='checkbox'
             checked={!nightMode && 'checked'}
             onClick={() => setNightMode(!nightMode)}

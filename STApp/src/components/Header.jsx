@@ -334,7 +334,7 @@ const HamburgerMenu = ({
         </Link>
         <Link
           className=' border rounded-lg m-4 p-2 md:duration-300 md:hover:bg-teal-600'
-          to='/chat'
+          to='/login'
         >
           Chat
         </Link>
