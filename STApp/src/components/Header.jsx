@@ -109,7 +109,7 @@ export default function Header({
           </p>
         </Fade>
 
-        <div className='flex justify-end'>
+        <div className='relative justify-end'>
           <Fade top duration={1500}>
             <div className='m-1  rounded-full'>
               <Night_LightModeButton
