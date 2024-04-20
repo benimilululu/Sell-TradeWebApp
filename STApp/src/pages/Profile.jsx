@@ -24,7 +24,7 @@ export default function Profile() {
         <p className='mt-4'>Email: {currentUser.email}</p>
         <div className='mt-5'></div>
       </div>
-      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white  animate-fade-in-from-bottom'>
+      <div className='text-center m-5 border-4 rounded-2xl p-5 text-2xl text-white  animate-fade-in-from-bottom h-fit'>
         <p>My Listing's</p>
         <div className='md:grid md:grid-cols-3 md:gap-5'>
           <GetFilteredItems user={currentUser.email} />
@@ -66,7 +66,7 @@ const GetFilteredItems = ({ user }) => {
         <div
           key={item.id}
           className='border-2 p-4 rounded-2xl
-           mx-5 text-center text-xl  my-4 md:h-full md:p-3 md:flex md:justify-between md:flex-col md:hover:scale-105  md:duration-300 md:mt-10'
+           mx-5 text-center text-xl  my-4 md:h-fit md:p-3 md:flex md:justify-between md:flex-col md:hover:scale-105  md:duration-300 md:mt-10'
         >
           <img className='rounded-xl' src={item.ImageUrl} />
           <p className='mt-5'>
