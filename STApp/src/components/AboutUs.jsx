@@ -13,37 +13,36 @@ export default function AboutUs() {
   
   `;
 
-  const supportAndAssurance = `We stand behind our users with a dedicated support team ready to assist with any questions or concerns. Our buyer protection policies and seller guidelines are in place to ensure fair and honest transactions, giving you peace of mind whether you're buying or selling.
-  
-  `;
-
-  const communityAndReviews = `Our vibrant community of buyers and sellers and our transparent review system contribute to an environment where you can shop and sell with confidence. See feedback from other users to guide your buying decisions and feel secure in knowing you're dealing with reputable sellers.
-  
-  `;
-
-  const commitment = `Our commitment to creating a safe, secure, and enjoyable environment for buying and selling items sets us apart. Whether you're a seasoned seller or a first-time buyer, our website offers a reliable platform where you can transact with confidence, knowing that we've got your back every step of the way.`;
-
   const AboutMeText = () => { 
-    return <div
-      className='text-xl mt-10  font-serif mx-5'
-      style={{ whiteSpace: 'pre-line' }}
-    >
-      <p className='font-bold'>{text}</p>
-      <p className='font-bold'>Trust and Security:</p>
-      <p>{trustAndSecurity}</p>
-      <p className='font-bold'>User-Friendly Experience:</p>
-      <p> {userFriendlyExperience}</p>
-      <p className='font-bold'>Support and Assurance: </p>
-      <p>{supportAndAssurance}</p>
-      <p className='font-bold'>Community and Reviews:</p>
-      <p> {communityAndReviews}</p>
-      <p className='font-bold'> {commitment}</p>
-    </div>;
+    return (
+      <div
+        className='text-xl mt-10  font-serif mx-5 grid md:grid-cols-3 items-top'
+        style={{ whiteSpace: 'pre-line' }}
+      >
+        <div >
+          <p className='font-bold w-fit m-auto text-3xl mb-4 border-b-2'>
+            About TopFind
+          </p>
+          <p className='font-bold px-6 '>{text}</p>
+        </div>
+        <div className='px-6'>
+          <p className=' font-bold text-3xl mb-4 m-auto border-b-2 w-fit'>
+            Trust and Security
+          </p>
+          <p className='font-bold'>{trustAndSecurity}</p>
+        </div>
+        <div className='px-6'>
+          <p className='font-bold mb-4 m-auto border-b-2 w-fit text-3xl'>
+            User-Friendly Experience:
+          </p>
+          <p className='font-bold'> {userFriendlyExperience}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className='text-center text-white text-3xl pb-10 mt-10 w-screen'>
-      <p className='font-bold'>About TopFind</p>
+    <div className='text-center text-white text-3xl pb-10 mt-10'>
       <AboutMeText />
     </div>
   );
