@@ -19,19 +19,19 @@ export default function AboutUs() {
         className='text-xl mt-10  font-serif mx-5 grid md:grid-cols-3 items-top'
         style={{ whiteSpace: 'pre-line' }}
       >
-        <div >
+        <div>
           <p className='font-bold w-fit m-auto text-3xl mb-4 border-b-2'>
             About TopFind
           </p>
           <p className='font-bold px-6 '>{text}</p>
         </div>
-        <div className='px-6'>
-          <p className=' font-bold text-3xl mb-4 m-auto border-b-2 w-fit'>
+        <div className='hidden sm:block px-6'>
+          <p className='font-bold text-3xl mb-4 m-auto border-b-2 w-fit'>
             Trust and Security
           </p>
           <p className='font-bold'>{trustAndSecurity}</p>
         </div>
-        <div className='px-6'>
+        <div className='hidden sm:block px-6'>
           <p className='font-bold mb-4 m-auto border-b-2 w-fit text-3xl'>
             User-Friendly Experience:
           </p>

@@ -145,7 +145,7 @@ export default function Header({
             <input
               type='text'
               value={searchBarValue}
-              className=' ml-4 text-black rounded-lg w-full md:w-4/6'
+              className='px-2 ml-4 text-black rounded-lg w-full md:w-4/6'
               onChange={(e) => {
                 storingInputValue(e);
               }}
@@ -156,7 +156,7 @@ export default function Header({
         <div></div>
         {searchResultIsOpen && (
           <div
-            className='absolute mt-2 inset-y-28 left-28 border-2 w-4/6 h-96 rounded-3xl backdrop-blur-xl overflow-auto md:w-2/6 md:h-4/6 overflow-x-hidden'
+            className='absolute  mt-2 inset-y-28 left-28 border-2 w-4/6 h-96 rounded-3xl backdrop-blur-xl overflow-auto md:w-2/6 md:h-4/6 overflow-x-hidden'
             ref={searchResultsRef}
           >
             <FilteringItems
@@ -195,15 +195,19 @@ const FilteringItems = ({ items, searchBarValue }) => {
       <Link key={item.id} to={`/listed-item/${item.id}`}>
         <div
           key={item.id}
-          className='border-2 p-4 rounded-2xl m-4 text-center '
+          className='border-2 text-sm p-2 md:text-lg grid grid-cols-2  rounded-2xl m-4 text-center h-fit'
         >
+          <div className='m-auto'>
           <img className='rounded-xl' src={item.ImageUrl} />
-          <p>
+          </div>
+          <div className='h-full m-auto w-fit'>
+            <p>
             Name: {item.Company} {item.Name}
           </p>
           <p>Size : {item.Number}</p>
           <p>Price : {item.Price}$</p>
           <p>{item.UserID}</p>
+          </div>
         </div>
       </Link>
     ));
