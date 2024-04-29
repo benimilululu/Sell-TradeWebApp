@@ -29,28 +29,50 @@ export default function Messages() {
           : data.user.uid + currentUser.uid;
 
       // try {
-        const res = await getDoc(doc(db, 'chats', combinedId));
-        if (!res.exists()) {
-          //create a chat in chats collection
-          await setDoc(doc(db, 'chats', combinedId), { messages: [] });
+      const res = await getDoc(doc(db, 'chats', combinedId));
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, 'chats', combinedId), { messages: arrayUnion({
+          id: uuid(),
+          text,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }) });
 
-          //create user chats
-          await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
-            [combinedId + '.userInfo']: {
-              uid: data.user.uid,
-              email: data.user.email,
-            },
-            [combinedId + '.date']: serverTimestamp(),
-          });
+        //create user chats
+        await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
+          [combinedId + '.userInfo']: {
+            uid: data.user.uid,
+            email: data.user.email,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
 
-          await updateDoc(doc(db, 'chatUsers', data.user.uid), {
-            [combinedId + '.userInfo']: {
-              uid: currentUser.uid,
-              email: currentUser.email,
-            },
-            [combinedId + '.date']: serverTimestamp(),
-          });
-        }
+         await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
+           [data.chatId + '.lastMessage']: {
+             text,
+           },
+           [data.chatId + '.date']: serverTimestamp(),
+         });
+
+        await updateDoc(doc(db, 'chatUsers', data.user.uid), {
+          [combinedId + '.userInfo']: {
+            uid: currentUser.uid,
+            email: currentUser.email,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
+
+         await updateDoc(doc(db, 'chatUsers', data.user.uid), {
+           [data.chatId + '.lastMessage']: {
+             text,
+           },
+           [data.chatId + '.date']: serverTimestamp(),
+         });
+
+      setText('');
+
+      }
       // // } catch (err) {
       // //   console.error(err);
       // // }
@@ -114,7 +136,7 @@ export default function Messages() {
   );
 }
 
-const MessagesData = ({sender}) => {
+const MessagesData = ({ sender }) => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
@@ -132,10 +154,10 @@ const MessagesData = ({sender}) => {
   useEffect(() => {
     const unSub = onSnapshot(doc(db, 'chats', data.chatId), (doc) => {
       if (doc.exists()) {
-       setMessages(doc.data().messages)
+        setMessages(doc.data().messages);
       } else {
-        setMessages([])
-      };
+        setMessages([]);
+      }
     });
 
     return () => {
@@ -147,22 +169,23 @@ const MessagesData = ({sender}) => {
 
   return (
     <div className='h-full my-5 '>
-      {messages.length ?
-        messages?.map((m) => (
-          <div
-            ref={ref}
-            className={`flow-root${m.senderId === currentUser.uid && ''}`}
-            key={m.id}
-          >
+      {messages.length
+        ? messages?.map((m) => (
             <div
-              className={` border w-fit p-2 m-2 rounded-full ${
-                m.senderId === currentUser.uid && 'bg-teal-600 float-right'
-              }`}
+              ref={ref}
+              className={`flow-root${m.senderId === currentUser.uid && ''}`}
+              key={m.id}
             >
-              {m.text}
-            </div>{' '}
-          </div>
-        )) : ''}
+              <div
+                className={` border w-fit p-2 m-2 rounded-full ${
+                  m.senderId === currentUser.uid && 'bg-teal-600 float-right'
+                }`}
+              >
+                {m.text}
+              </div>{' '}
+            </div>
+          ))
+        : ''}
     </div>
   );
 };

@@ -96,6 +96,7 @@ const [searchResultsOpen, setSearchResultsOpen] = useState(false)
                 <input
                   className='border-black w-4/5 h-10 m-auto rounded-xl p-2'
                   placeholder='Search User ...'
+                  value={userName}
                   onChange={(e) => {
                     setUserName(e.target.value);
                   }}

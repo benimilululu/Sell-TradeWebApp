@@ -45,8 +45,8 @@ export default function MdChatGenerator({
   };
 
   return (
-    <div className=' grid grid-cols-3 m-auto'>
-      <div className='animate-fade-in-from-bottom border-4 rounded-xl m-4 h-3/6 overflow-y-scroll p-2'>
+    <div className=' grid grid-cols-3 m-auto h-4/6'>
+      <div className='animate-fade-in-from-bottom border-4 rounded-xl m-4 overflow-y-scroll p-2 max-h-svh'>
         <p className='mx-2 mt-4 border-b-2 text-white'>Messages</p>
         {Object.entries(chat)
           ?.sort((a, b) => b[1].date - a[1].date)
@@ -82,7 +82,7 @@ export default function MdChatGenerator({
             </div>
           ))}
       </div>
-      <div className='m-4 h-full col-span-2'>
+      <div className=' col-span-2'>
         {/* {' '} */}
         <Messages />{' '}
       </div>

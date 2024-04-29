@@ -28,14 +28,13 @@ export default function SearchBarResults({
   const { dispatch } = useContext(ChatContext);
 
   const handleClick = async (item) => {
+      setChatBarValue('');
     const combinedId =
       currUser.uid > item.uid
         ? currUser.uid + item.uid
         : item.uid + currUser.uid;
     const res = await getDoc(doc(db, 'chats', combinedId));
-    console.log('l');
     dispatch({ type: 'CHANGE_USER', payload: item });
-    setChatBarValue('');
     setChatOpen(!chatOpen);
   };
 
