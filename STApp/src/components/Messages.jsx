@@ -28,7 +28,6 @@ export default function Messages() {
           ? currentUser.uid + data.user.uid
           : data.user.uid + currentUser.uid;
 
-      console.log(data.user);
       // try {
         const res = await getDoc(doc(db, 'chats', combinedId));
         if (!res.exists()) {
@@ -84,13 +83,13 @@ export default function Messages() {
   };
 
   return (
-    <div className=' mx-3 h-full overflow-hidden'>
+    <div className=' mx-3 h-5/6 overflow-hidden'>
       {data.user?.email && (
-        <div className='h-full'>
-          <p className='text-center inset-x-1 mt-4 text-2xl'>
-            {data.user?.email.split('@')[0].toUpperCase()}
+        <div className='h-5/6'>
+          <p className='text-center text-white inset-x-1 mt-4 text-2xl'>
+            to: {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-5/6 relative overflow-y-scroll mt-2'>
+          <div className='h-96 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>
@@ -115,7 +114,7 @@ export default function Messages() {
   );
 }
 
-const MessagesData = () => {
+const MessagesData = ({sender}) => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
@@ -123,12 +122,20 @@ const MessagesData = () => {
   const ref = useRef();
 
   useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    ref.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'start',
+    });
   }, [messages]);
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, 'chats', data.chatId), (doc) => {
-      doc.exists() && setMessages(doc.data().messages);
+      if (doc.exists()) {
+       setMessages(doc.data().messages)
+      } else {
+        setMessages([])
+      };
     });
 
     return () => {
@@ -140,7 +147,7 @@ const MessagesData = () => {
 
   return (
     <div className='h-full my-5 '>
-      {messages &&
+      {messages.length ?
         messages?.map((m) => (
           <div
             ref={ref}
@@ -155,7 +162,7 @@ const MessagesData = () => {
               {m.text}
             </div>{' '}
           </div>
-        ))}
+        )) : ''}
     </div>
   );
 };
