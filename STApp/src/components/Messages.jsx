@@ -83,13 +83,13 @@ export default function Messages() {
   };
 
   return (
-    <div className=' mx-3 h-5/6 overflow-hidden'>
+    <div className=' mx-3 h-full overflow-hidden'>
       {data.user?.email && (
-        <div className='h-5/6'>
+        <div className='h-full'>
           <p className='text-center text-white inset-x-1 mt-4 text-2xl'>
             to: {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-96 relative overflow-y-scroll mt-2'>
+          <div className='h-5/6 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>
