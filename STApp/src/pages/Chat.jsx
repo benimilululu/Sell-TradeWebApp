@@ -75,7 +75,7 @@ const [searchResultsOpen, setSearchResultsOpen] = useState(false)
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <Header />
-      <div className='flex items-center h-5/6 animate-fade-in-from-bottom md:hidden'>
+      <div className='flex items-center h-4/6 animate-fade-in-from-bottom md:hidden'>
         <div
           className={`${
             !chatOpen ? 'overflow-y-scroll' : ''

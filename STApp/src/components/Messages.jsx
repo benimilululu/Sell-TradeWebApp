@@ -89,7 +89,7 @@ export default function Messages() {
           <p className='text-center text-white inset-x-1 mt-4 text-2xl'>
             to: {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-5/6 relative overflow-y-scroll mt-2'>
+          <div className='h-4/6 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>
