@@ -85,11 +85,11 @@ export default function Messages() {
   return (
     <div className=' mx-3 h-full overflow-hidden'>
       {data.user?.email && (
-        <div className='h-full'>
+        <div className='h-4/6 md:h-5/6'>
           <p className='text-center text-white inset-x-1 mt-4 text-2xl'>
             to: {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-4/6 relative overflow-y-scroll mt-2'>
+          <div className='h-full md:h-96 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>

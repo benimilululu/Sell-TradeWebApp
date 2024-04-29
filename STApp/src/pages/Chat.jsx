@@ -79,7 +79,7 @@ const [searchResultsOpen, setSearchResultsOpen] = useState(false)
         <div
           className={`${
             !chatOpen ? 'overflow-y-scroll' : ''
-          } h-full  mt-5 border-4 w-5/6 m-auto justify-center items-center rounded-lg`}
+          } h-full  mt-5  w-5/6 m-auto justify-center items-center rounded-lg`}
         >
           {chatOpen && (
             <div className='relative' onClick={() => setChatOpen(!chatOpen)}>
