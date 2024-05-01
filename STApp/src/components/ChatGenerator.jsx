@@ -17,7 +17,7 @@ import { ChatContext } from '../context/ChatContext';
 
 
 
-export default function ChatGenerator ({currentUser, chatOpen, setChatOpen}) {
+export default function ChatGenerator ({currentUser, chatOpen, setChatOpen, setUserName}) {
   const { dispatch } = useContext(ChatContext);
 
   const [chat, setChats] = useState([]);
@@ -40,6 +40,7 @@ export default function ChatGenerator ({currentUser, chatOpen, setChatOpen}) {
   const selectHandler = (u) => {
     dispatch({ type: 'CHANGE_USER', payload: u });
     setChatOpen(!chatOpen);
+    // setUserName('')
   };
 
   return (
@@ -55,7 +56,6 @@ export default function ChatGenerator ({currentUser, chatOpen, setChatOpen}) {
                 className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white md:hover:scale-105  md:duration-300 z-0  md:hover:bg-teal-600 cursor-pointer'
                 onClick={() => {
                   selectHandler(chat[1].userInfo);
-                  console.log(chat[0]);
                   setUserName('');
                 }}
               >

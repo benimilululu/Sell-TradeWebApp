@@ -21,6 +21,7 @@ export default function Messages() {
 
   //   Sending message to the backend ->
   const sendHandler = async (data) => {
+        setText('');
     if (text.length) {
       // Generating chat if there is no chat
       const combinedId =
@@ -32,12 +33,14 @@ export default function Messages() {
       const res = await getDoc(doc(db, 'chats', combinedId));
       if (!res.exists()) {
         //create a chat in chats collection
-        await setDoc(doc(db, 'chats', combinedId), { messages: arrayUnion({
-          id: uuid(),
-          text,
-          senderId: currentUser.uid,
-          date: Timestamp.now(),
-        }) });
+        await setDoc(doc(db, 'chats', combinedId), {
+          messages: arrayUnion({
+            id: uuid(),
+            text,
+            senderId: currentUser.uid,
+            date: Timestamp.now(),
+          }),
+        });
 
         //create user chats
         await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
@@ -48,12 +51,12 @@ export default function Messages() {
           [combinedId + '.date']: serverTimestamp(),
         });
 
-         await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
-           [data.chatId + '.lastMessage']: {
-             text,
-           },
-           [data.chatId + '.date']: serverTimestamp(),
-         });
+        await updateDoc(doc(db, 'chatUsers', currentUser.uid), {
+          [data.chatId + '.lastMessage']: {
+            text,
+          },
+          [data.chatId + '.date']: serverTimestamp(),
+        });
 
         await updateDoc(doc(db, 'chatUsers', data.user.uid), {
           [combinedId + '.userInfo']: {
@@ -63,15 +66,14 @@ export default function Messages() {
           [combinedId + '.date']: serverTimestamp(),
         });
 
-         await updateDoc(doc(db, 'chatUsers', data.user.uid), {
-           [data.chatId + '.lastMessage']: {
-             text,
-           },
-           [data.chatId + '.date']: serverTimestamp(),
-         });
+        await updateDoc(doc(db, 'chatUsers', data.user.uid), {
+          [data.chatId + '.lastMessage']: {
+            text,
+          },
+          [data.chatId + '.date']: serverTimestamp(),
+        });
 
-      setText('');
-
+        setText('');
       }
       // // } catch (err) {
       // //   console.error(err);
@@ -111,25 +113,29 @@ export default function Messages() {
           <p className='text-center text-white inset-x-1 mt-4 text-2xl'>
             to: {data.user?.email.split('@')[0].toUpperCase()}
           </p>
-          <div className='h-full md:h-96 relative overflow-y-scroll mt-2'>
+          <div className='h-full text-white md:h-96 relative overflow-y-scroll mt-2'>
             {' '}
             <MessagesData />
           </div>
 
-          <div className=' bottom-0 grid grid-cols-4 mt-3 border-t'>
-            <input
-              placeholder='Type Message'
-              className=' text-black p-1 rounded-lg col-span-3 m-3'
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <button
-              className='bg-sky-500/75 border m-3 p-1 rounded-xl w-5/6'
-              onClick={() => sendHandler(data)}
-            >
-              Send
-            </button>
-          </div>
+          <form onSubmit={(e) => {e.preventDefault(); sendHandler(data)}}>
+            <div className=' bottom-0 grid grid-cols-4 mt-3 border-t'>
+              <input
+                placeholder='Type Message'
+                className=' text-black p-1 rounded-lg col-span-3 m-3'
+                onChange={(e) => setText(e.target.value)}
+                value={text}
+                maxLength={30}
+              />
+              <button
+                className='bg-sky-500/75 border m-3 p-1 rounded-xl w-5/6'
+                // onClick={() => sendHandler(data)}
+                type='submit'
+              >
+                Send
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>

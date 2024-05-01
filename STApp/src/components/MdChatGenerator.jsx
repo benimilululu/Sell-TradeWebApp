@@ -15,11 +15,7 @@ import {
 import { db } from '../config/firebase';
 import { ChatContext } from '../context/ChatContext';
 
-export default function MdChatGenerator({
-  currentUser,
-  chatOpen,
-  setUserName,
-}) {
+export default function MdChatGenerator({ currentUser, setUserName, emptySearchBar }) {
   const { dispatch } = useContext(ChatContext);
 
   const [chat, setChats] = useState([]);
@@ -41,7 +37,7 @@ export default function MdChatGenerator({
 
   const selectHandler = (u) => {
     dispatch({ type: 'CHANGE_USER', payload: u });
-
+    setUserName('');
   };
 
   return (
@@ -55,8 +51,8 @@ export default function MdChatGenerator({
               key={chat[0]}
               className='border-2 w-11/12 m-auto mt-3 rounded p-2 text-white md:hover:scale-105  md:duration-300 z-0  md:hover:bg-teal-600 cursor-pointer overflow-hidden'
               onClick={() => {
-                setUserName('');
                 selectHandler(chat[1].userInfo);
+                setUserName('')
               }}
             >
               <p className='text-2xl font-bold'>
@@ -82,7 +78,7 @@ export default function MdChatGenerator({
             </div>
           ))}
       </div>
-      <div className=' col-span-2'>
+      <div className='col-span-2'>
         {/* {' '} */}
         <Messages />{' '}
       </div>

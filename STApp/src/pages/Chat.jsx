@@ -68,10 +68,6 @@ const [searchResultsOpen, setSearchResultsOpen] = useState(false)
     searchResultHandler();
   }, []);
 
-  // const isSearchResultShow = () => {
-  //   setSearchResults(!searchResults)
-  // }
-
   return (
     <div className='relative h-screen w-screen overflow-hidden'>
       <Header />
@@ -128,13 +124,14 @@ const [searchResultsOpen, setSearchResultsOpen] = useState(false)
       <div className='hidden md:grid h-5/6'>
         <div className=' rounded-3xl p-4 h-5/6'>
           <div className=''>
-            <p className='text-center text-xl font-bold mt-2 text-white'>
+            <p className='w-fit m-auto text-center text-2xl font-bold mt-2 text-white'>
               TopFindChat
             </p>
             <div className='flex justify-center items-center mt-2 w-2/6'>
               <input
                 className='border-black w-4/5 h-10 m-auto  rounded-xl p-2'
                 placeholder='Search User ...'
+                value={userName}
                 onChange={(e) => {
                   setUserName(e.target.value);
                 }}
