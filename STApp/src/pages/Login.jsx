@@ -140,7 +140,7 @@ export default function Login() {
 
   const ProtectedRoute = ({ children }) => {
     if (currentUser) {
-      toast.error('Cannot create acc...');
+      toast.error('You are already Logged In !!!');
       return <Navigate to='/' />;
     }
 
@@ -148,7 +148,7 @@ export default function Login() {
   };
 
   return (
-    // <ProtectedRoute>
+    <ProtectedRoute>
       <div className='h-screen w-screen'>
         <Toaster />
         <Header />
@@ -178,6 +178,6 @@ export default function Login() {
           </div> : ''}
         
       </div>
-    // </ProtectedRoute>
+     </ProtectedRoute>
   );
 }
