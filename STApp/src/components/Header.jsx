@@ -93,7 +93,6 @@ export default function Header({
     <div className=''>
       <Toaster />
       <div className='text-3xl p-4 md:ml-3 text-white grid grid-cols-2 md:text-4xl'>
-        <Fade top duration={1500}>
           <p className='w-fit font-extrabold'>
             <Link
               to='/'
@@ -107,10 +106,8 @@ export default function Header({
               TopFind
             </Link>
           </p>
-        </Fade>
 
         <div className='flex justify-end'>
-          <Fade top duration={1500}>
             <div className='m-1  rounded-full' onClick={() => setNightMode(!nightMode)}>
               <Night_LightModeButton
                 nightMode={nightMode}
@@ -124,7 +121,6 @@ export default function Header({
               scrollHandler={scrollHandler}
               isHomePage={isHomePage}
             />
-          </Fade>
 
           {isOpen && (
             <HamburgerMenu
@@ -166,7 +162,6 @@ export default function Header({
           </div>
         )}
         {isHomePage && currentUser && (
-          <Fade bottom duration={1500}>
             <div
               className={`fixed bottom-2 right-2 size-5 border-4 h-28 w-28 object-cover backdrop-blur-xl rounded-full md:z-20`}
             >
@@ -175,7 +170,6 @@ export default function Header({
                 <p className='m-auto text-center text-xl font-bold'>Chat</p>
               </Link>
             </div>
-          </Fade>
         )}
       </div>
     </div>
