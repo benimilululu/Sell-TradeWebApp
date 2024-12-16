@@ -148,7 +148,6 @@ export default function Login() {
   };
 
   return (
-    <ProtectedRoute>
       <div className='h-screen w-screen'>
         <Toaster />
         <Header />
@@ -178,6 +177,5 @@ export default function Login() {
           </div> : ''}
         
       </div>
-     </ProtectedRoute>
   );
 }
